@@ -51,23 +51,34 @@
 
         /* Объемные прозрачные цифры */
         .step-number {
-            font-size: 3.5rem;
-            font-weight: 900;
-            line-height: 0.6;
-            margin-bottom: -5px;
-            background: linear-gradient(to bottom, rgba(239, 68, 68, 0.2) 0%, rgba(255, 255, 255, 0.01) 100%);
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 0.6;
+    margin-bottom: -5px;
+    background: linear-gradient(to bottom, rgba(239, 68, 68, 0.2) 0%, rgba(255, 255, 255, 0.01) 100%);
+    
+    /* 1. Пишем вендорные префиксы для Safari/Chrome */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    /* 2. Добавляем стандартное свойство для валидатора VS Code */
+    background-clip: text; 
+    
+    transition: all 0.5s ease;
+     }
+
+    @media (min-width: 1024px) {
+        .group:hover .step-number {
+            background: linear-gradient(to bottom, rgba(239, 68, 68, 0.5) 0%, rgba(239, 68, 68, 0.05) 100%);
+            
+            /* Повторяем ту же фиксацию здесь */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            transition: all 0.5s ease;
+            background-clip: text;
+            
+            transform: scale(1.05) translateY(-8px);
         }
-        @media (min-width: 1024px) {
-            .group:hover .step-number {
-                background: linear-gradient(to bottom, rgba(239, 68, 68, 0.5) 0%, rgba(239, 68, 68, 0.05) 100%);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                transform: scale(1.05) translateY(-8px);
-            }
-        }
+}
 
         /* Навигационные ссылки */
         .nav-link::after {
@@ -119,13 +130,15 @@
 </head>
 <body class="bg-[#060608] text-white overflow-x-hidden antialiased select-none sm:select-text">
 
-    <nav class="border-b border-white/[0.03] bg-[#060608]/90 backdrop-blur-xl sticky top-0 z-50 h-20">
+    <!-- НАВИГАЦИЯ -->
+    <nav class="border-b border-white/[0.03] bg-[#060608]/90 backdrop-blur-xl sticky top-0 z-50 h-20 lg:h-24 transition-all duration-300">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 h-full flex items-center justify-between">
             
             <div class="flex items-center gap-12">
+                <!-- Блок логотипа: h-11 на телефонах, h-14 на планшетах, lg:h-20 и xl:h-24 на ПК -->
                 <a href="#" class="flex items-center gap-3 sm:gap-4 group">
-                    <img src="logo.png" alt="Logo" class="h-11 sm:h-14 lg:h-16 w-auto object-contain transition-transform duration-300 lg:group-hover:scale-105" onError="this.style.display='none'">
-                    <span class="text-xl sm:text-2xl lg:text-3xl font-black tracking-widest uppercase italic text-white leading-none">
+                    <img src="logo.png" alt="Logo" class="h-11 sm:h-14 lg:h-20 xl:h-24 w-auto object-contain transition-transform duration-300 lg:group-hover:scale-105" onError="this.style.display='none'">
+                    <span class="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-black tracking-widest uppercase italic text-white leading-none">
                         <span class="text-red-500">LIVE</span>RP
                     </span>
                 </a>
@@ -155,6 +168,7 @@
             </div>
         </div>
 
+        <!-- МОБИЛЬНОЕ ВЫПАДАЮЩЕЕ МЕНЮ -->
         <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-[#0b0b0e] border-b border-white/[0.06] flex flex-col p-5 space-y-1 text-center text-sm font-black tracking-widest uppercase lg:hidden z-40 shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
             <a href="https://forum.liverp.ru/" target="_blank" class="text-white active:text-red-500 py-3.5 border-b border-white/[0.04] transition-colors">Форум</a>
             <a href="" target="_blank" class="text-white active:text-red-500 py-3.5 border-b border-white/[0.04] transition-colors">Донат</a>
@@ -169,6 +183,7 @@
         </div>
     </nav>
 
+    <!-- ГЛАВНЫЙ ЭКРАН -->
     <header class="hero-bg min-h-[calc(100vh-5rem)] flex flex-col justify-center items-center text-center px-4 py-8 sm:py-12 relative">
         <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-64 sm:w-96 h-64 sm:h-96 bg-red-600/10 blur-[80px] sm:blur-[150px] rounded-full pointer-events-none"></div>
 
@@ -203,6 +218,7 @@
         </div>
     </header>
 
+    <!-- ИГРОВЫЕ ФРАКЦИИ / ПРОФЕССИИ -->
     <section id="factions" class="max-w-[1400px] mx-auto px-4 sm:px-6 py-12 sm:py-24 border-t border-white/[0.02] scroll-reveal">
         <div class="flex flex-col lg:flex-row gap-5 lg:gap-8 items-stretch lg:h-[600px] xl:h-[680px]">
             
@@ -259,6 +275,7 @@
         </div>
     </section>
 
+    <!-- ПРЕИМУЩЕСТВА -->
     <section class="max-w-[1400px] mx-auto px-4 sm:px-6 py-12 sm:py-20 border-t border-white/[0.02] scroll-reveal">
         <div class="text-center mb-8 sm:mb-14 relative">
             <h2 class="text-xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight">Почему выбирают <span class="text-red-500 italic">LIVE RP</span>?</h2>
@@ -300,6 +317,7 @@
         </div>
     </section>
 
+    <!-- БЫСТРЫЙ СТАРТ -->
     <section id="start" class="bg-black/20 border-y border-white/[0.02] py-12 sm:py-24 scroll-reveal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
             <h2 class="text-2xl sm:text-4xl font-black uppercase tracking-wide mb-10 sm:mb-16">Быстрый <span class="text-red-500">старт</span></h2>
@@ -331,6 +349,7 @@
         </div>
     </section>
 
+    <!-- ПОДВАЛ -->
     <footer class="bg-[#040405] border-t border-white/[0.02] pt-12 sm:pt-16 pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10 text-left">
@@ -406,7 +425,7 @@
     // База данных фракций
     const factions = [
         { id: 'cgb', name: 'ЦГБ (Медики)', tag: 'ПОМОГАЙ ЛЮДЯМ', icon: 'fa-user-doctor', color: '#2563eb', img: 'image_9087e4.jpg', fallback: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200', desc: 'Самая почетная роль на сервере! Спасай жизни и приводи народ в чувства — ведь кто-то должен исправлять то, что натворили другие!' },
-        { id: 'mchs', name: 'МЧС', tag: 'СПАСАЙ ЖИЗНИ', icon: 'fa-fire-extinguisher', color: '#f97316', img: 'faction-mchs.jpg', fallback: 'https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=1200', desc: 'Борись с огненной стихией, вытаскивай пострадавших из завалов и ликвидируй последствия тяжелых аварий. Настоящие герои!' },
+        { id: 'mchs', name: 'МЧС', tag: 'СПАСАЙ ЖИЗНИ', icon: 'fa-fire-extinguisher', color: '#f97316', img: 'faction-mchs.jpg', fallback: 'https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=1200', desc: 'Борись с огненной стихией, вытаскивать пострадавших из завалов и ликвидируй последствия тяжелых аварий. Настоящие герои!' },
         { id: 'smi', name: 'Новости (СМИ)', tag: 'ИНФОРМИРУЙ ШТАТ', icon: 'fa-radio', color: '#06b6d4', img: 'faction-smi.jpg', fallback: 'https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?w=1200', desc: 'Редактируй коммерческие объявления, запускай развлекательные радиоэфиры и летай на вертолете в места самых жарких погонь.' },
         { id: 'gov', name: 'Правительство', tag: 'УПРАВЛЯЙ РЕГИОНОМ', icon: 'fa-landmark', color: '#38bdf8', img: 'faction-gov.jpg', fallback: 'https://images.unsplash.com/photo-1541872526868-a401c40217dd?w=1200', desc: 'Контролируй работу всех гос. структур сервера, распределяй казну, устанавливай налоги и проводи официальные проверки ведомств.' },
         { id: 'prok', name: 'Прокуратура', icon: 'fa-scale-balanced', tag: 'СЛЕДИ ЗА ЗАКОНОМ', color: '#6366f1', img: 'faction-prok.jpg', fallback: 'https://images.unsplash.com/photo-1453941403708-22363a0a167d?w=1200', desc: 'Главный надзор за силовиками. Рассматривай жалобы на превышение полномочий и представляй интересы государства в судах.' },
