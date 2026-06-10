@@ -133,7 +133,7 @@
 
     <header class="hero-bg min-h-[90vh] flex flex-col justify-center items-center text-center px-4">
         <div class="max-w-4xl mx-auto space-y-8">
-            <h1 class="text-5xl md:text-7xl font-black uppercase italic tracking-tight">Твоя новая жизнь в <br><span class="text-red-500">GTA 5 RolePlay</span></h1>
+            <h1 class="text-5xl md:text-7xl font-black uppercase italic tracking-tight">Твоя новая жизнь in <br><span class="text-red-500">GTA 5 RolePlay</span></h1>
             <p class="text-gray-300 max-w-2xl mx-auto text-base md:text-lg">LIVE RP — уникальный игровой мир со стабильным лаунчером, продвинутыми системами фракций, отзывчивой администрацией и тысячами единомышленников.</p>
             
             <div class="inline-flex items-center gap-6 bg-black/60 px-6 py-3 rounded-2xl border border-white/5">
@@ -372,7 +372,6 @@
 
             const iconBtn = document.createElement('button');
             iconBtn.id = `fac-icon-${idx}`;
-            // Улучшенный дизайн левых кнопок (иконка + текст)
             iconBtn.className = `w-full flex items-center gap-4 p-3 rounded-2xl border border-transparent transition-all duration-300 text-gray-500 hover:bg-white/[0.03] hover:text-white`;
             
             iconBtn.innerHTML = `
@@ -382,22 +381,22 @@
                 <span class="font-bold text-xs md:text-sm tracking-wide text-left uppercase w-32 truncate">${fac.name}</span>
             `;
             
-            iconBtn.onclick = () => selectFaction(idx);
+            iconBtn.onclick = () => selectFaction(idx, false);
             
             btnWrapper.appendChild(iconBtn);
             iconsContainer.appendChild(btnWrapper);
         });
         
-        selectFaction(0);
+        selectFaction(0, true);
     }
 
     function triggerAnimation() {
         contentWrapper.classList.remove('animate-content');
-        void contentWrapper.offsetWidth; // Магия для перезапуска CSS анимации
+        void contentWrapper.offsetWidth; 
         contentWrapper.classList.add('animate-content');
     }
 
-    function selectFaction(idx) {
+    function selectFaction(idx, isInitialLoad = false) {
         // Сброс
         const prevBtn = document.getElementById(`fac-icon-${currentIdx}`);
         if (prevBtn) {
@@ -418,9 +417,9 @@
             activeBtn.classList.add('bg-white/[0.05]', 'text-white', 'border-white/10');
             activeBtn.classList.remove('text-gray-500');
             const activeIconBox = activeBtn.querySelector('.icon-box');
-            activeIconBox.style.backgroundColor = fac.color + '20'; // прозрачный фон цвета фракции
+            activeIconBox.style.backgroundColor = fac.color + '20'; 
             activeIconBox.style.color = fac.color;
-            activeIconBox.style.boxShadow = `0 0 15px ${fac.color}40`; // мягкое неоновое свечение
+            activeIconBox.style.boxShadow = `0 0 15px ${fac.color}40`; 
         }
 
         triggerAnimation();
@@ -441,19 +440,22 @@
         displayImg.src = fac.img;
         displayImg.onerror = () => { displayImg.src = fac.fallback; };
 
-        activeBtn?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        // Прокручиваем только если это НЕ первый запуск при загрузке страницы
+        if (!isInitialLoad) {
+            activeBtn?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
     }
 
     function nextFaction() {
         let next = currentIdx + 1;
         if (next >= factions.length) next = 0;
-        selectFaction(next);
+        selectFaction(next, false);
     }
 
     function prevFaction() {
         let prev = currentIdx - 1;
         if (prev < 0) prev = factions.length - 1;
-        selectFaction(prev);
+        selectFaction(prev, false);
     }
 
     initSlider();
