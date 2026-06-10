@@ -2,7 +2,7 @@
 <html lang="ru" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LIVE RP | Проект GTA 5 RolePlay</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -42,30 +42,35 @@
             box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .glow-red:hover {
-            box-shadow: 0 0 35px rgba(239, 68, 68, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px) scale(1.02);
+        @media (min-width: 1024px) {
+            .glow-red:hover {
+                box-shadow: 0 0 35px rgba(239, 68, 68, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.2);
+                transform: translateY(-3px) scale(1.02);
+            }
         }
 
-        /* Объемные прозрачные цифры (Сдвинуты выше) */
+        /* Объемные прозрачные цифры */
         .step-number {
-            font-size: 6rem;
+            font-size: 3.5rem;
+            展现-sm { font-size: 5rem; }
             font-weight: 900;
             line-height: 0.6;
-            margin-bottom: -10px;
+            margin-bottom: -5px;
             background: linear-gradient(to bottom, rgba(239, 68, 68, 0.2) 0%, rgba(255, 255, 255, 0.01) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             transition: all 0.5s ease;
         }
-        .group:hover .step-number {
-            background: linear-gradient(to bottom, rgba(239, 68, 68, 0.5) 0%, rgba(239, 68, 68, 0.05) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            transform: scale(1.05) translateY(-8px);
+        @media (min-width: 1024px) {
+            .group:hover .step-number {
+                background: linear-gradient(to bottom, rgba(239, 68, 68, 0.5) 0%, rgba(239, 68, 68, 0.05) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                transform: scale(1.05) translateY(-8px);
+            }
         }
 
-        /* Плавное подчеркивание ссылок */
+        /* Навигационные ссылки */
         .nav-link::after {
             content: '';
             position: absolute;
@@ -82,29 +87,30 @@
             width: 100%;
         }
 
-        /* Скрытие скроллбара */
+        /* Скрытие скроллбара и поддержка тач-паддингов */
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
         }
         .hide-scrollbar {
             -ms-overflow-style: none;
             scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
         }
 
-        /* Анимация переключения контента фракций */
+        /* Анимация контента */
         @keyframes revealContent {
-            from { opacity: 0; transform: translateY(20px) scale(0.98); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+            from { opacity: 0; transform: translateY(15px); filter: blur(5px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
         .animate-content {
-            animation: revealContent 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            animation: revealContent 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
-        /* Анимация элементов при скролле (Scroll Animation) */
+        /* Анимация скролла */
         .scroll-reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.215, 0.610, 0.355, 1);
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.215, 0.610, 0.355, 1);
         }
         .scroll-reveal.active {
             opacity: 1;
@@ -112,22 +118,20 @@
         }
     </style>
 </head>
-<body class="bg-[#060608] text-white overflow-x-hidden">
+<body class="bg-[#060608] text-white overflow-x-hidden antialiased select-none sm:select-text">
 
-    <nav class="border-b border-white/[0.03] bg-[#060608]/70 backdrop-blur-xl sticky top-0 z-50 h-20">
-        <div class="max-w-[1400px] mx-auto px-6 h-full flex items-center justify-between">
+    <nav class="border-b border-white/[0.03] bg-[#060608]/90 backdrop-blur-xl sticky top-0 z-50 h-20">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 h-full flex items-center justify-between">
             
             <div class="flex items-center gap-12">
-                <a href="#" class="flex items-center gap-3">
-                    <div class="relative flex items-center justify-center">
-                        <img src="logo.png" alt="Logo" class="h-10 w-auto object-contain" scale-100 opacity-100 onError="this.style.display='none'">
-                    </div>
-                    <span class="text-2xl font-black tracking-widest uppercase italic text-white">
+                <a href="#" class="flex items-center gap-2.5">
+                    <img src="logo.png" alt="Logo" class="h-8 sm:h-9 w-auto object-contain" onError="this.style.display='none'">
+                    <span class="text-lg sm:text-xl font-black tracking-widest uppercase italic text-white">
                         <span class="text-red-500">LIVE</span>RP
                     </span>
                 </a>
                 
-                <div class="hidden md:flex items-center gap-8 text-[13px] font-black tracking-widest uppercase text-gray-400">
+                <div class="hidden lg:flex items-center gap-8 text-[13px] font-black tracking-widest uppercase text-gray-400">
                     <a href="https://forum.liverp.ru/" target="_blank" class="hover:text-white nav-link relative py-2">Форум</a>
                     <a href="" target="_blank" class="hover:text-white nav-link relative py-2">Донат</a>
                     <a href="https://forum.liverp.ru/forums/obshchiye-pravila-proyekta.2/" target="_blank" class="hover:text-white nav-link relative py-2">Правила</a>
@@ -135,111 +139,115 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-6">
-                <div class="flex items-center gap-4 text-lg text-gray-400">
-                    <a href="https://vk.com/liverp_ru" target="_blank" class="hover:text-[#4c75a3] hover:scale-110 active:scale-95 transition-all duration-200" title="ВКонтакте">
-                        <i class="fa-brands fa-vk"></i>
-                    </a>
-                    <a href="https://t.me/liverp_ru" target="_blank" class="hover:text-[#24a1de] hover:scale-110 active:scale-95 transition-all duration-200" title="Telegram">
-                        <i class="fa-brands fa-telegram"></i>
-                    </a>
-                    <a href="https://discord.gg/QWgdESwX" target="_blank" class="hover:text-[#5865f2] hover:scale-110 active:scale-95 transition-all duration-200" title="Discord">
-                        <i class="fa-brands fa-discord"></i>
-                    </a>
+            <div class="flex items-center gap-3 sm:gap-6">
+                <div class="hidden sm:flex items-center gap-4 text-lg text-gray-400">
+                    <a href="https://vk.com/liverp_ru" target="_blank" class="hover:text-[#4c75a3] transition-colors"><i class="fa-brands fa-vk"></i></a>
+                    <a href="https://t.me/liverp_ru" target="_blank" class="hover:text-[#24a1de] transition-colors"><i class="fa-brands fa-telegram"></i></a>
+                    <a href="https://discord.gg/QWgdESwX" target="_blank" class="hover:text-[#5865f2] transition-colors"><i class="fa-brands fa-discord"></i></a>
                 </div>
 
-                <a href="#start" class="bg-red-500 hover:bg-red-600 text-white font-black px-6 py-3 rounded-xl text-xs uppercase tracking-widest transition-all duration-300 glow-red active:scale-95">
-                    Начать играть <i class="fa-solid fa-play ml-1.5 text-[9px]"></i>
+                <a href="#start" class="bg-red-500 active:bg-red-600 lg:hover:bg-red-600 text-white font-black px-4 sm:px-5 py-2.5 rounded-xl text-[11px] uppercase tracking-widest transition-all glow-red active:scale-95 whitespace-nowrap">
+                    Играть <i class="fa-solid fa-play ml-1 text-[8px]"></i>
                 </a>
+
+                <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 flex items-center justify-center text-xl text-gray-400 active:text-white transition-colors" aria-label="Открыть меню">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
-            
+        </div>
+
+        <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-[#060608]/98 border-b border-white/5 backdrop-blur-3xl flex flex-col p-5 space-y-4 text-center text-xs font-black tracking-widest uppercase text-gray-400 lg:hidden z-40 shadow-2xl">
+            <a href="https://forum.liverp.ru/" target="_blank" class="hover:text-white py-2.5 border-b border-white/[0.02]">Форум</a>
+            <a href="" target="_blank" class="hover:text-white py-2.5 border-b border-white/[0.02]">Донат</a>
+            <a href="https://forum.liverp.ru/forums/obshchiye-pravila-proyekta.2/" target="_blank" class="hover:text-white py-2.5 border-b border-white/[0.02]">Правила</a>
+            <a href="#factions" class="hover:text-white py-2.5">Фракции</a>
+            <div class="flex justify-center gap-8 text-2xl pt-4 border-t border-white/5 text-gray-500">
+                <a href="https://vk.com/liverp_ru" target="_blank" class="active:text-[#4c75a3]"><i class="fa-brands fa-vk"></i></a>
+                <a href="https://t.me/liverp_ru" target="_blank" class="active:text-[#24a1de]"><i class="fa-brands fa-telegram"></i></a>
+                <a href="https://discord.gg/QWgdESwX" target="_blank" class="active:text-[#5865f2]"><i class="fa-brands fa-discord"></i></a>
+            </div>
         </div>
     </nav>
 
-    <header class="hero-bg min-h-[92vh] flex flex-col justify-center items-center text-center px-4 relative">
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 blur-[150px] rounded-full pointer-events-none"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-900/20 blur-[150px] rounded-full pointer-events-none"></div>
+    <header class="hero-bg min-h-[calc(100vh-5rem)] flex flex-col justify-center items-center text-center px-4 py-8 sm:py-12 relative">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-64 sm:w-96 h-64 sm:h-96 bg-red-600/10 blur-[80px] sm:blur-[150px] rounded-full pointer-events-none"></div>
 
-        <div class="max-w-4xl mx-auto space-y-10 relative z-10">
-            <h1 class="text-5xl md:text-8xl font-black uppercase italic tracking-tight leading-none">
+        <div class="max-w-4xl mx-auto space-y-6 sm:space-y-8 relative z-10 w-full">
+            <h1 class="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black uppercase italic tracking-tight leading-[1.1] sm:leading-none">
                 Твоя новая жизнь в <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-500 to-red-600 drop-shadow-[0_5px_15px_rgba(239,68,68,0.2)]">GTA 5 RolePlay</span>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-red-600 drop-shadow-[0_4px_10px_rgba(239,68,68,0.25)]">GTA 5 RolePlay</span>
             </h1>
-            <p class="text-gray-400 max-w-2xl mx-auto text-base md:text-xl font-medium leading-relaxed">
-                LIVE RP — уникальный игровой мир со стабильным лаунчером, продвинутыми фракциями, отзывчивой администрацией и тысячами единомышленников.
+            
+            <p class="text-gray-400 max-w-xl mx-auto text-xs sm:text-base md:text-lg font-medium leading-relaxed px-2 sm:px-0">
+                LIVE RP — уникальный ролевой мир со стабильным лаунчером, продвинутыми государственными структурами и отзывчивой администрацией.
             </p>
             
-            <div class="inline-flex items-center gap-6 bg-black/40 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/5 shadow-2xl">
-                <div class="flex items-center gap-2a">
-                    <span class="w-2.5 h-2.5 bg-red-500 rounded-full shadow-[0_0_10px_#ef4444] animate-ping absolute"></span>
-                    <span class="w-2.5 h-2.5 bg-red-500 rounded-full shadow-[0_0_10px_#ef4444] relative inline-block"></span>
-                    <span class="text-xs uppercase font-black tracking-widest text-gray-300 ml-2">Сервер LIVE #1</span>
+            <div class="inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-4 bg-black/50 backdrop-blur-md px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-white/5 shadow-xl">
+                <div class="flex items-center gap-2 relative">
+                    <span class="w-2 h-2 bg-red-500 rounded-full shadow-[0_0_8px_#ef4444] animate-ping absolute"></span>
+                    <span class="w-2 h-2 bg-red-500 rounded-full shadow-[0_0_8px_#ef4444] relative inline-block"></span>
+                    <span class="text-[10px] sm:text-xs uppercase font-black tracking-widest text-gray-300 ml-1.5">Сервер LIVE #1</span>
                 </div>
-                <div class="w-[1px] h-4 bg-white/10"></div>
-                <div class="text-sm font-bold tracking-wide">
-                    <span class="text-red-500 text-2xl font-black tabular-nums transition-all duration-500" id="online-count">748</span>
+                <div class="hidden sm:block w-[1px] h-3 bg-white/10"></div>
+                <div class="text-xs sm:text-sm font-bold tracking-wide">
+                    <span class="text-red-500 text-base sm:text-xl font-black tabular-nums" id="online-count">748</span>
                     <span class="text-gray-400 font-medium">/ 1000 игроков</span>
                 </div>
             </div>
 
-            <div class="pt-4">
-                <a href="#start" class="inline-block bg-red-500 hover:bg-red-600 px-14 py-5 rounded-2xl font-black uppercase glow-red text-center text-sm tracking-widest active:scale-95">
+            <div class="pt-2">
+                <a href="#start" class="inline-block w-full sm:w-auto bg-red-500 active:bg-red-600 lg:hover:bg-red-600 px-8 sm:px-12 py-4 rounded-xl sm:rounded-2xl font-black uppercase glow-red text-center text-xs sm:text-sm tracking-widest active:scale-95 transition-transform">
                     Скачать лаунчер
                 </a>
             </div>
         </div>
-        
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-50 hover:opacity-100 transition-opacity animate-bounce">
-            <a href="#factions" class="text-white text-xl"><i class="fa-solid fa-chevron-down"></i></a>
-        </div>
     </header>
 
-    <section id="factions" class="max-w-[1400px] mx-auto px-4 sm:px-6 py-32 border-t border-white/[0.02] scroll-reveal">
-        <div class="flex flex-col lg:flex-row gap-8 items-stretch lg:h-[700px]">
+    <section id="factions" class="max-w-[1400px] mx-auto px-4 sm:px-6 py-12 sm:py-24 border-t border-white/[0.02] scroll-reveal">
+        <div class="flex flex-col lg:flex-row gap-5 lg:gap-8 items-stretch lg:h-[600px] xl:h-[680px]">
             
-            <div class="w-full lg:w-1/3 xl:w-1/4 bg-[#0a0a0d] border border-white/[0.04] rounded-[32px] p-4 flex flex-col relative overflow-hidden shadow-2xl">
-                <div class="px-4 pt-6 pb-6 border-b border-white/[0.02] mb-4">
-                    <h2 class="text-3xl font-black uppercase tracking-wide text-white">Профессии</h2>
-                    <span class="text-red-500 font-black uppercase tracking-[0.25em] text-[10px] block mt-1">Выбери свой путь</span>
+            <div class="w-full lg:w-1/3 xl:w-1/4 bg-[#0a0a0d] border border-white/[0.04] rounded-[20px] sm:rounded-[32px] p-3 sm:p-4 flex flex-col relative overflow-hidden shadow-xl">
+                <div class="px-2 pt-3 pb-3 border-b border-white/[0.02] mb-3 sm:mb-4">
+                    <h2 class="text-xl sm:text-2xl font-black uppercase tracking-wide text-white">Профессии</h2>
+                    <span class="text-red-500 font-black uppercase tracking-[0.2em] text-[9px] block mt-0.5">Выбери свой путь</span>
                 </div>
                 
-                <div id="faction-icons-container" class="flex lg:flex-col gap-2.5 overflow-x-auto lg:overflow-y-auto hide-scrollbar relative z-10 px-1 pb-6 flex-grow max-h-[450px] lg:max-h-none">
+                <div id="faction-icons-container" class="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto snap-x snap-mandatory hide-scrollbar relative z-10 px-1 pb-3 lg:pb-4 flex-grow">
                     </div>
                 
-                <div class="hidden lg:block absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-[#0a0a0d] to-transparent z-20 pointer-events-none"></div>
+                <div class="hidden lg:block absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-[#0a0a0d] to-transparent z-20 pointer-events-none"></div>
             </div>
 
-            <div class="w-full lg:w-2/3 xl:w-3/4 bg-[#070709] border border-white/[0.04] rounded-[32px] overflow-hidden relative min-h-[550px] flex flex-col justify-end shadow-2xl">
+            <div class="w-full lg:w-2/3 xl:w-3/4 bg-[#070709] border border-white/[0.04] rounded-[20px] sm:rounded-[32px] overflow-hidden relative min-h-[380px] sm:min-h-[500px] flex flex-col justify-end shadow-xl">
                 
-                <img id="faction-image" src="" alt="Live RP" class="absolute inset-0 w-full h-full object-cover opacity-40 transition-all duration-[1.2s] ease-out transform scale-100 group-hover:scale-105 filter grayscale-[30%]">
+                <img id="faction-image" src="" alt="Live RP" class="absolute inset-0 w-full h-full object-cover opacity-20 sm:opacity-40 transition-all duration-700 filter grayscale-[20%]">
                 
-                <div class="absolute inset-0 bg-gradient-to-r from-[#050507] via-[#050507]/95 to-transparent hidden md:block z-0"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/95 to-transparent md:hidden z-0"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/95 to-transparent lg:bg-gradient-to-r lg:from-[#050507] lg:via-[#050507]/90 lg:to-transparent z-0"></div>
 
-                <div class="relative z-10 w-full md:w-5/6 px-8 py-14 md:p-20 flex flex-col items-start text-left">
+                <div class="relative z-10 w-full lg:w-5/6 px-5 py-8 sm:p-12 md:p-16 flex flex-col items-start text-left">
                     
                     <div class="w-full" id="content-wrapper">
-                        <div class="flex items-center gap-4 mb-5">
-                            <span class="h-[3px] w-12 rounded-full transition-all duration-500 shadow-lg" id="faction-line"></span>
-                            <span id="faction-subtitle" class="font-black uppercase tracking-[0.2em] text-xs md:text-sm transition-colors duration-500"></span>
+                        <div class="flex items-center gap-2.5 mb-3 sm:mb-4">
+                            <span class="h-[2px] w-6 sm:w-10 rounded-full transition-all duration-500 shadow-md" id="faction-line"></span>
+                            <span id="faction-subtitle" class="font-black uppercase tracking-[0.15em] text-[10px] sm:text-xs transition-colors duration-500"></span>
                         </div>
 
-                        <h3 id="faction-title" class="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-wide uppercase mb-6 drop-shadow-2xl"></h3>
+                        <h3 id="faction-title" class="text-xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-wide uppercase mb-3 sm:mb-4 drop-shadow-md"></h3>
 
-                        <p id="faction-desc" class="text-gray-400 text-sm md:text-base lg:text-lg leading-relaxed font-medium min-h-[90px] mb-12 max-w-2xl">
+                        <p id="faction-desc" class="text-gray-400 text-xs sm:text-sm md:text-base leading-relaxed font-medium min-h-[70px] sm:min-h-[85px] mb-6 sm:mb-8 max-w-2xl">
                         </p>
 
-                        <div class="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
-                            <a href="#start" id="faction-btn" class="w-full sm:w-auto text-white font-black px-16 py-5 rounded-2xl text-sm uppercase tracking-widest text-center transition-all duration-500 shadow-xl hover:brightness-110 active:scale-95">
+                        <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                            <a href="#start" id="faction-btn" class="w-full sm:w-auto text-white font-black px-8 sm:px-14 py-3.5 sm:py-4.5 rounded-xl text-xs uppercase tracking-widest text-center transition-all shadow-md active:scale-95">
                                 Начать играть
                             </a>
                             
-                            <div class="flex items-center gap-3">
-                                <button onclick="prevFaction()" class="w-12 h-12 rounded-xl border border-white/5 bg-white/[0.02] backdrop-blur-md flex items-center justify-center text-white hover:bg-white/10 hover:border-white/20 active:scale-90 transition-all shadow-md">
-                                    <i class="fa-solid fa-chevron-left text-sm"></i>
+                            <div class="hidden sm:flex items-center gap-2">
+                                <button onclick="prevFaction()" class="w-10 h-10 rounded-xl border border-white/5 bg-white/[0.02] backdrop-blur-md flex items-center justify-center text-white hover:bg-white/10 active:scale-90 transition-all">
+                                    <i class="fa-solid fa-chevron-left text-xs"></i>
                                 </button>
-                                <button onclick="nextFaction()" class="w-12 h-12 rounded-xl border border-white/5 bg-white/[0.02] backdrop-blur-md flex items-center justify-center text-white hover:bg-white/10 hover:border-white/20 active:scale-90 transition-all shadow-md">
-                                    <i class="fa-solid fa-chevron-right text-sm"></i>
+                                <button onclick="nextFaction()" class="w-10 h-10 rounded-xl border border-white/5 bg-white/[0.02] backdrop-blur-md flex items-center justify-center text-white hover:bg-white/10 active:scale-90 transition-all">
+                                    <i class="fa-solid fa-chevron-right text-xs"></i>
                                 </button>
                             </div>
                         </div>
@@ -251,134 +259,123 @@
         </div>
     </section>
 
-    <section class="max-w-[1400px] mx-auto px-6 py-16 border-t border-white/[0.02] scroll-reveal">
-        <div class="text-center mb-16 relative">
-            <div class="absolute inset-0 bg-red-500/5 blur-[150px] rounded-full w-96 h-36 mx-auto top-0 pointer-events-none"></div>
-            <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tight">Почему выбирают <span class="text-red-500 italic drop-shadow-[0_0_15px_rgba(239,68,68,0.3)]">LIVE RP</span>?</h2>
-            <p class="text-gray-400 mt-4 max-w-xl mx-auto text-sm md:text-base font-medium leading-relaxed">Мы создали продвинутую технологическую платформу, где каждый элемент геймплея доведен до идеала.</p>
+    <section class="max-w-[1400px] mx-auto px-4 sm:px-6 py-12 sm:py-20 border-t border-white/[0.02] scroll-reveal">
+        <div class="text-center mb-8 sm:mb-14 relative">
+            <h2 class="text-xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight">Почему выбирают <span class="text-red-500 italic">LIVE RP</span>?</h2>
+            <p class="text-gray-400 mt-2 max-w-xl mx-auto text-xs sm:text-sm font-medium leading-relaxed px-2">Технологический стек платформы оптимизирован для обеспечения стабильного FPS.</p>
         </div>
         
-        <div class="grid md:grid-cols-3 gap-8 items-stretch">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 items-stretch">
             
-            <div class="bg-[#0a0a0d]/60 backdrop-blur-md border border-white/[0.03] hover:border-red-500/30 p-10 rounded-[32px] transition-all duration-500 group text-left flex flex-col justify-between hover:-translate-y-2.5 hover:shadow-[0_30px_60px_rgba(239,68,68,0.05)] relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-red-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="bg-[#0a0a0d]/60 border border-white/[0.03] p-5 sm:p-8 rounded-[20px] sm:rounded-[28px] transition-all group text-left flex flex-col justify-between relative overflow-hidden">
                 <div>
-                    <div class="w-16 h-16 rounded-2xl bg-white/[0.01] border border-white/[0.04] flex items-center justify-center mb-10 group-hover:bg-red-500/10 group-hover:border-red-500/30 group-hover:shadow-[0_0_25px_rgba(239,68,68,0.2)] transition-all duration-500 transform group-hover:rotate-3">
-                        <i class="fa-solid fa-code text-2xl text-gray-400 group-hover:text-red-400 transition-colors duration-500"></i>
+                    <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-white/[0.02] border border-white/[0.04] flex items-center justify-center mb-5 group-hover:border-red-500/20 transition-all">
+                        <i class="fa-solid fa-code text-lg text-gray-400 group-hover:text-red-400 transition-colors"></i>
                     </div>
-                    <div class="flex items-center gap-3 mb-5">
-                        <h3 class="text-2xl font-black uppercase tracking-wide text-white group-hover:text-red-500 transition-colors duration-300">Собственная экосистема</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm lg:text-base leading-relaxed font-medium group-hover:text-gray-300 transition-colors duration-500">Абсолютно уникальный игровой код на базе FiveM с безупречной оптимизацией. Полное отсутствие микрофризов, моментальный отклик интерфейсов и плавная синхронизация транспорта.</p>
+                    <h3 class="text-lg sm:text-xl font-black uppercase tracking-wide text-white mb-2 group-hover:text-red-500 transition-colors">Собственная экосистема</h3>
+                    <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-medium">Уникальное серверное ядро на базе FiveM. Полное отсутствие микрофризов, моментальный отклик интерфейсов и плавная синхронизация транспорта.</p>
                 </div>
             </div>
             
-            <div class="bg-[#0a0a0d]/60 backdrop-blur-md border border-white/[0.03] hover:border-red-500/30 p-10 rounded-[32px] transition-all duration-500 group text-left flex flex-col justify-between hover:-translate-y-2.5 hover:shadow-[0_30px_60px_rgba(239,68,68,0.05)] relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-red-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="bg-[#0a0a0d]/60 border border-white/[0.03] p-5 sm:p-8 rounded-[20px] sm:rounded-[28px] transition-all group text-left flex flex-col justify-between relative overflow-hidden">
                 <div>
-                    <div class="w-16 h-16 rounded-2xl bg-white/[0.01] border border-white/[0.04] flex items-center justify-center mb-10 group-hover:bg-red-500/10 group-hover:border-red-500/30 group-hover:shadow-[0_0_25px_rgba(239,68,68,0.2)] transition-all duration-500 transform group-hover:rotate-3">
-                        <i class="fa-solid fa-car text-2xl text-gray-400 group-hover:text-red-400 transition-colors duration-500"></i>
+                    <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-white/[0.02] border border-white/[0.04] flex items-center justify-center mb-5 group-hover:border-red-500/20 transition-all">
+                        <i class="fa-solid fa-car text-lg text-gray-400 group-hover:text-red-400 transition-colors"></i>
                     </div>
-                    <div class="flex items-center gap-3 mb-5">
-                        <h3 class="text-2xl font-black uppercase tracking-wide text-white group-hover:text-red-500 transition-colors duration-300">Премиальный автопарк</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm lg:text-base leading-relaxed font-medium group-hover:text-gray-300 transition-colors duration-500">Более 500 детализированных моделей легендарных мировых брендов. Кастомный визуальный тюнинг, детальная настройка ходовой и уникальные винилы позволят создать авто мечты.</p>
+                    <h3 class="text-lg sm:text-xl font-black uppercase tracking-wide text-white mb-2 group-hover:text-red-500 transition-colors">Премиальный автопарк</h3>
+                    <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-medium">Более 500 детализированных моделей реальных марок. Кастомный визуальный тюнинг, детальная настройка физики подвески и эксклюзивные винилы.</p>
                 </div>
             </div>
             
-            <div class="bg-[#0a0a0d]/60 backdrop-blur-md border border-white/[0.03] hover:border-red-500/30 p-10 rounded-[32px] transition-all duration-500 group text-left flex flex-col justify-between hover:-translate-y-2.5 hover:shadow-[0_30px_60px_rgba(239,68,68,0.05)] relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-red-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="bg-[#0a0a0d]/60 border border-white/[0.03] p-5 sm:p-8 rounded-[20px] sm:rounded-[28px] transition-all group text-left flex flex-col justify-between relative overflow-hidden md:col-span-2 lg:col-span-1">
                 <div>
-                    <div class="w-16 h-16 rounded-2xl bg-white/[0.01] border border-white/[0.04] flex items-center justify-center mb-10 group-hover:bg-red-500/10 group-hover:border-red-500/30 group-hover:shadow-[0_0_25px_rgba(239,68,68,0.2)] transition-all duration-500 transform group-hover:rotate-3">
-                        <i class="fa-solid fa-users text-2xl text-gray-400 group-hover:text-red-400 transition-colors duration-500"></i>
+                    <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-white/[0.02] border border-white/[0.04] flex items-center justify-center mb-5 group-hover:border-red-500/20 transition-all">
+                        <i class="fa-solid fa-users text-lg text-gray-400 group-hover:text-red-400 transition-colors"></i>
                     </div>
-                    <div class="flex items-center gap-3 mb-5">
-                        <h3 class="text-2xl font-black uppercase tracking-wide text-white group-hover:text-red-500 transition-colors duration-300">Экономическая свобода</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm lg:text-base leading-relaxed font-medium group-hover:text-gray-300 transition-colors duration-500">Финансовая система, полностью управляемая игроками. Стройте масштабные бизнес-империи, монополизируйте торговые рынки или зарабатывайте капитал на подпольных сделках.</p>
+                    <h3 class="text-lg sm:text-xl font-black uppercase tracking-wide text-white mb-2 group-hover:text-red-500 transition-colors">Экономическая свобода</h3>
+                    <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-medium">Финансовая модель, полностью регулируемая действиями игроков. Создавайте корпорации, монополизируйте торговые рынки или ведите теневой бизнес.</p>
                 </div>
             </div>
             
         </div>
     </section>
 
-    <section id="start" class="bg-black/30 border-y border-white/[0.02] py-32 scroll-reveal">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h2 class="text-4xl md:text-5xl font-black uppercase tracking-wide mb-20">Быстрый <span class="text-red-500">старт</span></h2>
-            <div class="grid md:grid-cols-3 gap-8 relative z-10">
+    <section id="start" class="bg-black/20 border-y border-white/[0.02] py-12 sm:py-24 scroll-reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+            <h2 class="text-2xl sm:text-4xl font-black uppercase tracking-wide mb-10 sm:mb-16">Быстрый <span class="text-red-500">старт</span></h2>
+            <div class="grid md:grid-cols-3 gap-5 relative z-10">
                 
-                <div class="relative p-10 bg-[#0a0a0d]/40 border border-white/[0.04] hover:border-red-500/20 hover:shadow-[0_15px_40px_rgba(239,68,68,0.03)] rounded-[24px] transition-all duration-500 group pt-14">
-                    <div class="step-number mx-auto mb-4">01</div>
-                    <div class="w-14 h-14 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-center mx-auto text-xl text-red-500 group-hover:scale-110 transition-transform duration-300"><i class="fa-brands fa-steam"></i></div>
-                    <h4 class="text-lg font-black mt-5 uppercase tracking-widest text-white">Лицензия GTA 5</h4>
-                    <p class="text-gray-400 mt-3 text-sm leading-relaxed font-medium">Подойдет любая чистая лицензионная версия игры (Steam, Epic Games, Rockstar Launcher).</p>
+                <div class="relative p-5 sm:p-8 bg-[#0a0a0d]/40 border border-white/[0.04] rounded-[16px] sm:rounded-[24px] group pt-8 sm:pt-12">
+                    <div class="step-number mx-auto mb-2">01</div>
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-center mx-auto text-base text-red-500"><i class="fa-brands fa-steam"></i></div>
+                    <h4 class="text-sm sm:text-base font-black mt-3.5 sm:mt-4 uppercase tracking-widest text-white">Лицензия GTA 5</h4>
+                    <p class="text-gray-400 mt-2 text-xs sm:text-sm leading-relaxed font-medium">Подойдет абсолютно любая официальная версия игры (Steam, Epic Games, Rockstar).</p>
                 </div>
                 
-                <div class="relative p-10 bg-[#0a0a0d]/40 border border-white/[0.04] hover:border-red-500/20 hover:shadow-[0_15px_40px_rgba(239,68,68,0.03)] rounded-[24px] transition-all duration-500 group pt-14">
-                    <div class="step-number mx-auto mb-4">02</div>
-                    <div class="w-14 h-14 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-center mx-auto text-xl text-red-500 group-hover:scale-110 transition-transform duration-300"><i class="fa-solid fa-download"></i></div>
-                    <h4 class="text-lg font-black mt-5 uppercase tracking-widest text-white">Наш лаунчер</h4>
-                    <p class="text-gray-400 mt-3 text-sm leading-relaxed font-medium">Установи наш загрузчик. Он автоматически скачает и настроит все необходимые файлы.</p>
-                    <a href="launcher.exe" download class="inline-block mt-6 bg-red-500 hover:bg-red-600 px-8 py-3 rounded-xl text-xs font-black transition-all shadow-lg shadow-red-500/10 uppercase tracking-widest active:scale-95">Скачать</a>
+                <div class="relative p-5 sm:p-8 bg-[#0a0a0d]/40 border border-white/[0.04] rounded-[16px] sm:rounded-[24px] group pt-8 sm:pt-12">
+                    <div class="step-number mx-auto mb-2">02</div>
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-center mx-auto text-base text-red-500"><i class="fa-solid fa-download"></i></div>
+                    <h4 class="text-sm sm:text-base font-black mt-3.5 sm:mt-4 uppercase tracking-widest text-white">Наш лаунчер</h4>
+                    <p class="text-gray-400 mt-2 text-xs sm:text-sm leading-relaxed font-medium">Загрузите умный загрузчик. Он в автоматическом режиме распакует нужные файлы.</p>
+                    <a href="launcher.exe" download class="inline-block mt-4 bg-red-500 active:bg-red-600 text-white px-6 py-2.5 rounded-lg text-[10px] font-black transition-colors uppercase tracking-widest">Скачать</a>
                 </div>
                 
-                <div class="relative p-10 bg-[#0a0a0d]/40 border border-white/[0.04] hover:border-red-500/20 hover:shadow-[0_15px_40px_rgba(239,68,68,0.03)] rounded-[24px] transition-all duration-500 group pt-14">
-                    <div class="step-number mx-auto mb-4">03</div>
-                    <div class="w-14 h-14 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-center mx-auto text-xl text-red-500 group-hover:scale-110 transition-transform duration-300"><i class="fa-solid fa-plug"></i></div>
-                    <h4 class="text-lg font-black mt-5 uppercase tracking-widest text-white">Подключение</h4>
-                    <p class="text-gray-400 mt-3 text-sm leading-relaxed font-medium">Запускай лаунчер, проходи быструю регистрацию и создавай уникальную внешность персонажа.</p>
+                <div class="relative p-5 sm:p-8 bg-[#0a0a0d]/40 border border-white/[0.04] rounded-[16px] sm:rounded-[24px] group pt-8 sm:pt-12">
+                    <div class="step-number mx-auto mb-2">03</div>
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-center mx-auto text-base text-red-500"><i class="fa-solid fa-plug"></i></div>
+                    <h4 class="text-sm sm:text-base font-black mt-3.5 sm:mt-4 uppercase tracking-widest text-white">Подключение</h4>
+                    <p class="text-gray-400 mt-2 text-xs sm:text-sm leading-relaxed font-medium">Запускайте клиент, регистрируйте аккаунт и генерируйте внешность персонажа.</p>
                 </div>
                 
             </div>
         </div>
     </section>
 
-    <footer class="bg-[#040405] border-t border-white/[0.02] pt-20 pb-12">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 text-left">
+    <footer class="bg-[#040405] border-t border-white/[0.02] pt-12 sm:pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10 text-left">
                 
-                <div class="space-y-5">
-                    <span class="text-2xl font-black tracking-widest uppercase italic text-white">
-                        <span class="text-red-500">LIVE <i class="fa-solid fa-heartbeat animate-pulse ml-0.5 text-xl"></i></span>RP
+                <div class="space-y-3 col-span-1 sm:col-span-2 md:col-span-1">
+                    <span class="text-xl font-black tracking-widest uppercase italic text-white">
+                        <span class="text-red-500">LIVE <i class="fa-solid fa-heartbeat animate-pulse ml-0.5 text-lg"></i></span>RP
                     </span>
-                    <p class="text-gray-500 text-xs leading-relaxed font-medium">Развлекательный ролевой онлайн-проект, основанный на платформе RAGE Multiplayer для игры GTA 5. Мы не связаны с компаниями Take-Two Interactive или Rockstar Games.</p>
+                    <p class="text-gray-500 text-[11px] leading-relaxed font-medium">Игровой сервер мультиплеера RAGE MP. Take-Two Interactive, Rockstar Games не имеют отношения к проекту.</p>
                 </div>
                 
                 <div>
-                    <h5 class="text-xs font-black uppercase tracking-[0.2em] text-white mb-5">Навигация</h5>
-                    <ul class="space-y-3 text-xs font-medium text-gray-400">
-                        <li><a href="https://forum.liverp.ru/" target="_blank" class="hover:text-red-500 transition-colors">Официальный Форум</a></li>
-                        <li><a href="#" class="hover:text-red-500 transition-colors">Пополнение счета (Донат)</a></li>
-                        <li><a href="https://forum.liverp.ru/forums/obshchiye-pravila-proyekta.2/" target="_blank" class="hover:text-red-500 transition-colors">Общие правила сервера</a></li>
+                    <h5 class="text-[11px] font-black uppercase tracking-[0.15em] text-white mb-3">Навигация</h5>
+                    <ul class="space-y-2 text-xs text-gray-400 font-medium">
+                        <li><a href="https://forum.liverp.ru/" target="_blank" class="hover:text-red-500">Официальный Форум</a></li>
+                        <li><a href="#" class="hover:text-red-500">Пополнение счета (Донат)</a></li>
+                        <li><a href="https://forum.liverp.ru/forums/obshchiye-pravila-proyekta.2/" target="_blank" class="hover:text-red-500">Общие правила</a></li>
                     </ul>
                 </div>
 
                 <div>
-                    <h5 class="text-xs font-black uppercase tracking-[0.2em] text-white mb-5">Документы</h5>
-                    <ul class="space-y-3 text-xs font-medium text-gray-400">
-                        <li><a href="#" class="hover:text-red-500 transition-colors">Пользовательское соглашение</a></li>
-                        <li><a href="#" class="hover:text-red-500 transition-colors">Политика конфиденциальности</a></li>
-                        <li><a href="#" class="hover:text-red-500 transition-colors">Условия возврата средств</a></li>
+                    <h5 class="text-[11px] font-black uppercase tracking-[0.15em] text-white mb-3">Документы</h5>
+                    <ul class="space-y-2 text-xs text-gray-400 font-medium">
+                        <li><a href="#" class="hover:text-red-500">Соглашение оферты</a></li>
+                        <li><a href="#" class="hover:text-red-500">Конфиденциальность</a></li>
+                        <li><a href="#" class="hover:text-red-500">Правила возврата</a></li>
                     </ul>
                 </div>
 
                 <div>
-                    <h5 class="text-xs font-black uppercase tracking-[0.2em] text-white mb-5">Тех.поддержка</h5>
-                    <p class="text-gray-500 text-xs leading-relaxed mb-4 font-medium">Возникли проблемы с установкой лаунчера? Напишите нам в технический раздел.</p>
+                    <h5 class="text-[11px] font-black uppercase tracking-[0.15em] text-white mb-3">Контакты</h5>
+                    <p class="text-gray-500 text-xs mb-2 font-medium">Технические вопросы по лаунчеру:</p>
                     <p class="text-xs text-gray-300 font-bold">Email: <span class="text-gray-400 font-medium">support@live-rp.ru</span></p>
                 </div>
 
             </div>
             
-            <div class="border-t border-white/[0.02] pt-8 text-center text-xs text-gray-600 space-y-2 font-medium">
-                <p>© 2026 LIVE RP. Все права защищены. Все используемые торговые марки принадлежат их законным правообладателям.</p>
-                <p class="text-[10px] text-gray-700 uppercase tracking-wider">Используя данный веб-сайт, вы автоматически соглашаетесь с правилами оферты.</p>
+            <div class="border-t border-white/[0.02] pt-6 text-center text-[11px] text-gray-600 space-y-1.5 font-medium">
+                <p>© 2026 LIVE RP. Все права сохранены за правообладателями.</p>
             </div>
         </div>
     </footer>
 
     <script>
-    // Живой счетчик онлайна
+    // Имитация онлайна
     const onlineSpan = document.getElementById('online-count');
     if (onlineSpan) {
         let currentOnline = Math.floor(Math.random() * (780 - 720 + 1)) + 720;
@@ -392,7 +389,21 @@
         }, 4000);
     }
 
-    // Массив фракций с обновленными цветам
+    // Бургер-меню
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mobileMenu.classList.toggle('hidden');
+        });
+        document.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+    }
+
+    // База данных фракций
     const factions = [
         { id: 'cgb', name: 'ЦГБ (Медики)', tag: 'ПОМОГАЙ ЛЮДЯМ', icon: 'fa-user-doctor', color: '#2563eb', img: 'image_9087e4.jpg', fallback: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200', desc: 'Самая почетная роль на сервере! Спасай жизни и приводи народ в чувства — ведь кто-то должен исправлять то, что натворили другие!' },
         { id: 'mchs', name: 'МЧС', tag: 'СПАСАЙ ЖИЗНИ', icon: 'fa-fire-extinguisher', color: '#f97316', img: 'faction-mchs.jpg', fallback: 'https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=1200', desc: 'Борись с огненной стихией, вытаскивай пострадавших из завалов и ликвидируй последствия тяжелых аварий. Настоящие герои!' },
@@ -427,17 +438,18 @@
         
         factions.forEach((fac, idx) => {
             const btnWrapper = document.createElement('div');
-            btnWrapper.className = 'w-full flex-shrink-0 lg:flex-shrink-0 block';
+            // snap-start выравнивает элемент по левому краю при свайпе на смартфонах
+            btnWrapper.className = 'w-[180px] sm:w-[240px] lg:w-full flex-shrink-0 block snap-start';
 
             const iconBtn = document.createElement('button');
             iconBtn.id = `fac-icon-${idx}`;
-            iconBtn.className = `w-full flex items-center gap-4 p-3.5 rounded-2xl border border-white/[0.04] transition-all duration-300 text-gray-500 hover:bg-white/[0.02] hover:text-white`;
+            iconBtn.className = `w-full flex items-center gap-2.5 sm:gap-4 p-2 sm:p-3.5 rounded-xl lg:rounded-2xl border border-white/[0.04] transition-all duration-300 text-gray-500 hover:bg-white/[0.02]`;
             
             iconBtn.innerHTML = `
-                <div class="w-10 h-10 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-center icon-box transition-all duration-300 shadow-sm">
-                    <i class="fa-solid ${fac.icon} text-sm"></i>
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg lg:rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-center icon-box flex-shrink-0">
+                    <i class="fa-solid ${fac.icon} text-xs sm:text-sm"></i>
                 </div>
-                <span class="font-black text-xs tracking-wider text-left uppercase w-36 truncate transition-transform duration-300 group-hover:translate-x-1">${fac.name}</span>
+                <span class="font-black text-[10px] sm:text-xs tracking-wider text-left uppercase truncate flex-grow text-gray-400 btn-text">${fac.name}</span>
             `;
             
             iconBtn.onclick = () => selectFaction(idx, false);
@@ -449,17 +461,11 @@
         selectFaction(0, true);
     }
 
-    function triggerAnimation() {
-        contentWrapper.classList.remove('animate-content');
-        void contentWrapper.offsetWidth; 
-        contentWrapper.classList.add('animate-content');
-    }
-
     function selectFaction(idx, isInitialLoad = false) {
         const prevBtn = document.getElementById(`fac-icon-${currentIdx}`);
         if (prevBtn) {
-            prevBtn.classList.remove('bg-white/[0.03]', 'text-white', 'border-white/10');
-            prevBtn.classList.add('text-gray-500', 'border-white/[0.04]');
+            prevBtn.classList.remove('bg-white/[0.03]', 'border-white/10');
+            prevBtn.querySelector('.btn-text').classList.replace('text-white', 'text-gray-400');
             const prevIconBox = prevBtn.querySelector('.icon-box');
             prevIconBox.style.backgroundColor = '';
             prevIconBox.style.color = '';
@@ -471,15 +477,19 @@
 
         const activeBtn = document.getElementById(`fac-icon-${idx}`);
         if (activeBtn) {
-            activeBtn.classList.add('bg-white/[0.03]', 'text-white', 'border-white/10');
-            activeBtn.classList.remove('text-gray-500', 'border-white/[0.04]');
+            activeBtn.classList.add('bg-white/[0.03]', 'border-white/10');
+            activeBtn.querySelector('.btn-text').classList.replace('text-gray-400', 'text-white');
             const activeIconBox = activeBtn.querySelector('.icon-box');
             activeIconBox.style.backgroundColor = fac.color + '15'; 
             activeIconBox.style.color = fac.color;
-            activeIconBox.style.boxShadow = `0 0 20px ${fac.color}30`; 
+            activeIconBox.style.boxShadow = `0 0 15px ${fac.color}20`; 
         }
 
-        triggerAnimation();
+        if (!isInitialLoad) {
+            contentWrapper.classList.remove('animate-content');
+            void contentWrapper.offsetWidth; 
+            contentWrapper.classList.add('animate-content');
+        }
 
         displayTitle.innerText = fac.name;
         displaySubtitle.innerText = fac.tag;
@@ -487,10 +497,10 @@
         
         displaySubtitle.style.color = fac.color;
         displayLine.style.backgroundColor = fac.color;
-        displayLine.style.boxShadow = `0 0 15px ${fac.color}`;
+        displayLine.style.boxShadow = `0 0 12px ${fac.color}`;
         
         displayBtn.style.backgroundColor = fac.color;
-        displayBtn.style.boxShadow = `0 15px 30px -5px ${fac.color}40`;
+        displayBtn.style.boxShadow = `0 10px 20px -5px ${fac.color}30`;
 
         displayImg.src = fac.img;
         displayImg.onerror = () => { displayImg.src = fac.fallback; };
@@ -512,11 +522,12 @@
         selectFaction(prev, false);
     }
 
+    // Scroll reveal эффект
     const revealElements = document.querySelectorAll('.scroll-reveal');
     const revealOnScroll = () => {
         revealElements.forEach(el => {
             const rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight * 0.85) {
+            if (rect.top < window.innerHeight * 0.88) {
                 el.classList.add('active');
             }
         });
