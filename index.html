@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIVE RP | Проект GTA 5 RolePlay</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <style>
+        .hero-bg {
+            background: linear-gradient(125deg, rgba(0, 0, 0, 0.7) 0%, rgba(20, 0, 0, 0.85) 100%), 
+                        url('https://imgur.com/a/ileReZ0') no-repeat center center/cover;
+            background-size: cover;
+            background-position: center 30%;
+        }
+        .glow-red {
+            box-shadow: 0 0 18px rgba(239, 68, 68, 0.4);
+            transition: all 0.2s ease;
+        }
+        .glow-red:hover {
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.7);
+            transform: translateY(-2px);
+        }
+        .step-number {
+            font-size: 6rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.03);
+            user-select: none;
+        }
+        .step-icon {
+            width: 4rem;
+            height: 4rem;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #ef4444;
+        }
+        @keyframes pulse-red {
+            0% { opacity: 0.6; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+        .pulse-dot {
+            animation: pulse-red 0.9s infinite alternate;
+        }
+    </style>
+</head>
+<body class="bg-[#0a0a0c] text-white">
+
+    <nav class="border-b border-white/5 bg-[#0a0a0c]/90 backdrop-blur-xl sticky top-0 z-50">
+        <div class="max-w-[1600px] mx-auto px-4 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="#" class="flex items-center gap-3">
+                    <span class="text-2xl font-black text-red-500 uppercase italic">LIVE<span class="text-white">RP</span></span>
+                </a>
+                <div class="hidden lg:flex gap-6 text-sm font-semibold text-gray-400">
+                    <a href="#" class="text-red-500">Главная</a>
+                    <a href="#" class="hover:text-white">Форум</a>
+                    <a href="#" class="hover:text-white">Донат</a>
+                    <a href="#" class="hover:text-white">Правила</a>
+                </div>
+            </div>
+            <a href="#start" class="bg-white text-black font-black px-6 py-2.5 rounded-xl text-xs uppercase">Начать играть</a>
+        </div>
+    </nav>
+
+    <header class="hero-bg min-h-[85vh] flex flex-col justify-center items-center text-center px-4">
+        <div class="max-w-4xl mx-auto space-y-8">
+            <h1 class="text-5xl md:text-7xl font-black uppercase italic">Твоя новая жизнь в <br><span class="text-red-500">GTA 5 RolePlay</span></h1>
+            <p class="text-gray-300 max-w-2xl mx-auto">LIVE RP — уникальный мир с продвинутыми системами, отзывчивой администрацией и тысячами игроков.</p>
+            
+            <div class="inline-flex items-center gap-6 bg-black/60 px-6 py-3 rounded-2xl">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 bg-red-500 rounded-full pulse-dot"></span>
+                    <span class="text-xs uppercase">Сервер LIVE #1</span>
+                </div>
+                <div class="text-sm font-bold">
+                    <span class="text-red-500 text-xl font-black" id="online-count">748</span>
+                    <span class="text-gray-400">/ 1000 игроков</span>
+                </div>
+            </div>
+
+            <div class="flex gap-4 justify-center">
+                <a href="#start" class="bg-red-500 hover:bg-red-600 px-8 py-4 rounded-xl font-black uppercase glow-red">Скачать лаунчер</a>
+                <a href="#" class="bg-white/10 hover:bg-white/20 px-8 py-4 rounded-xl border border-white/20">Наш Discord</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="max-w-7xl mx-auto px-4 py-28">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-black uppercase">Почему <span class="text-red-500">LIVE RP</span>?</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-white/5 p-8 rounded-2xl text-center">
+                <i class="fa-solid fa-code text-4xl text-red-500 mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Уникальный мод</h3>
+                <p class="text-gray-400">Собственная разработка на RAGE:MP</p>
+            </div>
+            <div class="bg-white/5 p-8 rounded-2xl text-center">
+                <i class="fa-solid fa-car text-4xl text-red-500 mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Огромный автопарк</h3>
+                <p class="text-gray-400">Сотни реальных автомобилей</p>
+            </div>
+            <div class="bg-white/5 p-8 rounded-2xl text-center">
+                <i class="fa-solid fa-users text-4xl text-red-500 mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Живая экономика</h3>
+                <p class="text-gray-400">Создавай корпорации и бизнес</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="start" class="bg-black/40 py-28">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-black uppercase mb-16">Быстрый <span class="text-red-500">старт</span></h2>
+            <div class="grid md:grid-cols-3 gap-12">
+                <div>
+                    <div class="step-number mx-auto">01</div>
+                    <div class="step-icon mx-auto mt-2"><i class="fa-brands fa-steam text-2xl"></i></div>
+                    <h4 class="text-xl font-bold mt-4">Лицензия GTA 5</h4>
+                    <p class="text-gray-400 mt-2">Лицензионная версия игры</p>
+                </div>
+                <div>
+                    <div class="step-number mx-auto">02</div>
+                    <div class="step-icon mx-auto mt-2"><i class="fa-solid fa-download text-2xl"></i></div>
+                    <h4 class="text-xl font-bold mt-4">Наш лаунчер</h4>
+                    <p class="text-gray-400 mt-2">Скачай и установи</p>
+                    <a href="#" class="inline-block mt-4 bg-red-500 px-6 py-2 rounded-lg text-sm font-bold">Скачать</a>
+                </div>
+                <div>
+                    <div class="step-number mx-auto">03</div>
+                    <div class="step-icon mx-auto mt-2"><i class="fa-solid fa-plug text-2xl"></i></div>
+                    <h4 class="text-xl font-bold mt-4">Подключение</h4>
+                    <p class="text-gray-400 mt-2">Создай персонажа и играй</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-white/5 py-12 text-center text-gray-500 text-sm">
+        <p>© 2026 LIVE RP. Все права защищены. GTA 5 — торговая марка Rockstar Games.</p>
+    </footer>
+
+    <script>
+    // Имитация онлайна для статического хостинга (GitHub)
+    const onlineSpan = document.getElementById('online-count');
+    
+    if (onlineSpan) {
+        // Стартовое случайное число от 720 до 780
+        let currentOnline = Math.floor(Math.random() * (780 - 720 + 1)) + 720;
+        onlineSpan.innerText = currentOnline;
+
+        // Небольшое изменение онлайна каждые 7 секунд для реалистичности
+        setInterval(() => {
+            const change = Math.floor(Math.random() * 5) - 2; // -2, -1, 0, 1, 2
+            currentOnline += change;
+            
+            // Держим в красивых пределах
+            if (currentOnline < 650) currentOnline = 650;
+            if (currentOnline > 950) currentOnline = 950;
+
+            onlineSpan.innerText = currentOnline;
+            
+            // Эффект пульсации при изменении
+            onlineSpan.style.transform = 'scale(1.1)';
+            setTimeout(() => { onlineSpan.style.transform = ''; }, 200);
+        }, 7000);
+    }
+</script>
+</body>
+</html>
