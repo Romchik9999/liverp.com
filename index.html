@@ -52,7 +52,6 @@
         /* Объемные прозрачные цифры */
         .step-number {
             font-size: 3.5rem;
-            展现-sm { font-size: 5rem; }
             font-weight: 900;
             line-height: 0.6;
             margin-bottom: -5px;
@@ -156,15 +155,16 @@
             </div>
         </div>
 
-        <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-[#060608]/98 border-b border-white/5 backdrop-blur-3xl flex flex-col p-5 space-y-4 text-center text-xs font-black tracking-widest uppercase text-gray-400 lg:hidden z-40 shadow-2xl">
-            <a href="https://forum.liverp.ru/" target="_blank" class="hover:text-white py-2.5 border-b border-white/[0.02]">Форум</a>
-            <a href="" target="_blank" class="hover:text-white py-2.5 border-b border-white/[0.02]">Донат</a>
-            <a href="https://forum.liverp.ru/forums/obshchiye-pravila-proyekta.2/" target="_blank" class="hover:text-white py-2.5 border-b border-white/[0.02]">Правила</a>
-            <a href="#factions" class="hover:text-white py-2.5">Фракции</a>
-            <div class="flex justify-center gap-8 text-2xl pt-4 border-t border-white/5 text-gray-500">
-                <a href="https://vk.com/liverp_ru" target="_blank" class="active:text-[#4c75a3]"><i class="fa-brands fa-vk"></i></a>
-                <a href="https://t.me/liverp_ru" target="_blank" class="active:text-[#24a1de]"><i class="fa-brands fa-telegram"></i></a>
-                <a href="https://discord.gg/QWgdESwX" target="_blank" class="active:text-[#5865f2]"><i class="fa-brands fa-discord"></i></a>
+        <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-[#0b0b0e] border-b border-white/[0.06] flex flex-col p-5 space-y-1 text-center text-sm font-black tracking-widest uppercase lg:hidden z-40 shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
+            <a href="https://forum.liverp.ru/" target="_blank" class="text-white active:text-red-500 py-3.5 border-b border-white/[0.04] transition-colors">Форум</a>
+            <a href="" target="_blank" class="text-white active:text-red-500 py-3.5 border-b border-white/[0.04] transition-colors">Донат</a>
+            <a href="https://forum.liverp.ru/forums/obshchiye-pravila-proyekta.2/" target="_blank" class="text-white active:text-red-500 py-3.5 border-b border-white/[0.04] transition-colors">Правила</a>
+            <a href="#factions" class="text-white active:text-red-500 py-3.5 transition-colors">Фракции</a>
+            
+            <div class="flex justify-center gap-8 text-2xl pt-5 pb-2 border-t border-white/[0.06] text-gray-400">
+                <a href="https://vk.com/liverp_ru" target="_blank" class="active:text-[#4c75a3] transition-colors"><i class="fa-brands fa-vk"></i></a>
+                <a href="https://t.me/liverp_ru" target="_blank" class="active:text-[#24a1de] transition-colors"><i class="fa-brands fa-telegram"></i></a>
+                <a href="https://discord.gg/QWgdESwX" target="_blank" class="active:text-[#5865f2] transition-colors"><i class="fa-brands fa-discord"></i></a>
             </div>
         </div>
     </nav>
@@ -438,7 +438,6 @@
         
         factions.forEach((fac, idx) => {
             const btnWrapper = document.createElement('div');
-            // snap-start выравнивает элемент по левому краю при свайпе на смартфонах
             btnWrapper.className = 'w-[180px] sm:w-[240px] lg:w-full flex-shrink-0 block snap-start';
 
             const iconBtn = document.createElement('button');
@@ -522,7 +521,6 @@
         selectFaction(prev, false);
     }
 
-    // Scroll reveal эффект
     const revealElements = document.querySelectorAll('.scroll-reveal');
     const revealOnScroll = () => {
         revealElements.forEach(el => {
