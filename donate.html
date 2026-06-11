@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Донат | LIVE RP</title>
+    
+    <link rel="icon" type="image/png" href="image/logoblack.png">
+    <link rel="apple-touch-icon" href="image/logoblack.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Главный экран С СЕТКОЙ */
+        .hero-bg {
+            position: relative;
+            background: radial-gradient(circle at 50% 50%, rgba(20, 0, 0, 0.6) 0%, rgba(10, 10, 12, 1) 100%), 
+                        url('image/background.jpg') no-repeat center center/cover;
+            background-size: cover;
+            overflow: hidden;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(239, 68, 68, 0.05) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(239, 68, 68, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+            animation: gridMove 24s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        @keyframes gridMove {
+            from { background-position: 0 0; }
+            to { background-position: 40px 40px; }
+        }
+
+        /* Улучшенное неоновое свечение */
+        .glow-red {
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @media (min-width: 1024px) {
+            .glow-red:hover {
+                box-shadow: 0 0 35px rgba(239, 68, 68, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.2);
+                transform: translateY(-3px) scale(1.02);
+            }
+        }
+
+        /* Парящая анимация */
+        @keyframes floatEffect {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .float-hover {
+            animation: floatEffect 6s ease-in-out infinite;
+        }
+
+        /* Анимация фоновых сфер */
+        @keyframes ambientPulse {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.4; }
+            50% { transform: scale(1.1) translate(20px, -20px); opacity: 0.7; }
+        }
+        .ambient-glow {
+            animation: ambientPulse 10s ease-in-out infinite alternate;
+        }
+
+        /* Навигационные ссылки */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -6px;
+            left: 50%;
+            background-color: #ef4444;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px #ef4444;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        .nav-link.active {
+            color: white;
+        }
+
+        /* Анимация скролла */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Фокус для инпутов */
+        input:focus {
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+            border-color: #ef4444 !important;
+        }
+        
+        /* Убираем стрелочки у input type="number" */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+        
+        /* Стили для радио-кнопок пакетов */
+        .package-radio:checked + div {
+            border-color: #ef4444;
+            background-color: rgba(239, 68, 68, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-[#060608] text-white overflow-x-hidden antialiased select-none sm:select-text">
+
+    <nav class="border-b border-white/[0.03] bg-[#060608]/90 backdrop-blur-xl sticky top-0 z-50 h-16 sm:h-20 lg:h-24 transition-all duration-300">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 h-full flex items-center justify-between">
+            
+            <div class="flex items-center gap-6 lg:gap-12">
+                <a href="index.html" class="flex items-center gap-2 sm:gap-4 group">
+                    <img src="image/logowhite.png" alt="Logo" class="h-8 sm:h-10 lg:h-14 w-auto object-contain transition-transform duration-300 lg:group-hover:scale-105" onError="this.style.display='none'">
+                    <span class="text-xl sm:text-2xl lg:text-3xl font-black tracking-widest uppercase italic text-white leading-none">
+                        <span class="text-red-500">LIVE</span>RP
+                    </span>
+                </a>
+                
+                <div class="hidden lg:flex items-center gap-10 text-sm font-black tracking-widest uppercase text-gray-400">
+                    <a href="index.html" class="hover:text-white nav-link relative py-2">Главная</a>
+                    <a href="https://forum.liverp.ru/" target="_blank" class="hover:text-white nav-link relative py-2">Форум</a>
+                    <a href="#" class="hover:text-white nav-link active relative py-2">Донат</a>
+                    <a href="https://forum.liverp.ru/forums/obshchiye-pravila-proyekta.2/" target="_blank" class="hover:text-white nav-link relative py-2">Правила</a>
+                    <a href="index.html#factions" class="hover:text-white nav-link relative py-2">Фракции</a>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4 sm:gap-8">
+                <div class="hidden sm:flex items-center gap-4 lg:gap-5 text-xl text-gray-400">
+                    <a href="https://vk.com/liverp_ru" target="_blank" class="hover:text-[#4c75a3] transition-colors"><i class="fa-brands fa-vk"></i></a>
+                    <a href="https://t.me/liverp_ru" target="_blank" class="hover:text-[#24a1de] transition-colors"><i class="fa-brands fa-telegram"></i></a>
+                    <a href="https://discord.gg/QWgdESwX" target="_blank" class="hover:text-[#5865f2] transition-colors"><i class="fa-brands fa-discord"></i></a>
+                    <a href="#" target="_blank" class="hover:text-[#E1306C] transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" target="_blank" class="hover:text-white transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#" target="_blank" class="hover:text-[#FF0000] transition-colors"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+
+                <a href="index.html#start" class="bg-red-500 active:bg-red-600 lg:hover:bg-red-600 text-white font-black px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm uppercase tracking-widest transition-all glow-red active:scale-95 whitespace-nowrap flex items-center">
+                    Играть <i class="fa-solid fa-play ml-2 text-[10px] sm:text-[12px]"></i>
+                </a>
+
+                <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 flex items-center justify-center text-2xl text-gray-400 active:text-white transition-colors" aria-label="Открыть меню">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-[#0b0b0e] border-b border-white/[0.06] flex flex-col p-5 space-y-2 text-center text-sm font-black tracking-widest uppercase lg:hidden z-40 shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
+            <a href="index.html" class="text-white active:text-red-500 py-3 border-b border-white/[0.04] transition-colors">Главная</a>
+            <a href="https://forum.liverp.ru/" target="_blank" class="text-white active:text-red-500 py-3 border-b border-white/[0.04] transition-colors">Форум</a>
+            <a href="#" class="text-red-500 py-3 border-b border-white/[0.04] transition-colors">Донат</a>
+            <a href="https://forum.liverp.ru/forums/obshchiye-pravila-proyekta.2/" target="_blank" class="text-white active:text-red-500 py-3 border-b border-white/[0.04] transition-colors">Правила</a>
+            <a href="index.html#factions" class="text-white active:text-red-500 py-3 transition-colors">Фракции</a>
+            
+            <div class="flex flex-wrap justify-center gap-6 text-2xl pt-6 pb-2 border-t border-white/[0.06] text-gray-400">
+                <a href="https://vk.com/liverp_ru" target="_blank" class="active:text-[#4c75a3] transition-colors"><i class="fa-brands fa-vk"></i></a>
+                <a href="https://t.me/liverp_ru" target="_blank" class="active:text-[#24a1de] transition-colors"><i class="fa-brands fa-telegram"></i></a>
+                <a href="https://discord.gg/QWgdESwX" target="_blank" class="active:text-[#5865f2] transition-colors"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" target="_blank" class="active:text-[#E1306C] transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" target="_blank" class="active:text-white transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#" target="_blank" class="active:text-[#FF0000] transition-colors"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-bg py-6 sm:py-8 relative border-b border-white/5">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 blur-[150px] rounded-full pointer-events-none ambient-glow"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-600/5 blur-[150px] rounded-full pointer-events-none ambient-glow" style="animation-delay: -5s;"></div>
+
+        <div class="max-w-[1400px] mx-auto w-full relative z-10 flex flex-col items-center px-4 sm:px-6">
+            <div class="w-full text-center space-y-2 sm:space-y-3 flex flex-col items-center max-w-4xl relative z-10">
+                <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-widest">
+                    <i class="fa-solid fa-store"></i> Магазин
+                </div>
+                <h1 class="text-3xl sm:text-5xl md:text-6xl font-black uppercase italic tracking-tight leading-[1.1] sm:leading-[1.05] drop-shadow-xl">
+                    Пополнение <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400">счета</span>
+                </h1>
+                <p class="text-gray-300 max-w-2xl text-xs sm:text-base font-medium leading-relaxed drop-shadow pt-1">
+                    Поддержите проект и получите игровую валюту (LiveCoins) для покупки эксклюзивного транспорта, недвижимости и премиум-статусов.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-10 sm:py-20 relative z-20 scroll-reveal">
+        <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+            
+            <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+                
+                <div class="w-full lg:w-1/2 relative float-hover" style="animation-duration: 8s;">
+                    <div class="absolute inset-0 bg-gradient-to-b from-[#121217]/90 to-[#0a0a0d]/90 backdrop-blur-xl border border-white/[0.05] rounded-[24px] sm:rounded-[32px] shadow-2xl pointer-events-none"></div>
+                    <div class="absolute inset-0 overflow-hidden rounded-[24px] sm:rounded-[32px] pointer-events-none">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/10 blur-[50px] rounded-full"></div>
+                    </div>
+                    
+                    <div class="p-5 sm:p-8 lg:p-10 relative z-10">
+                        <h2 class="text-xl sm:text-3xl font-black uppercase tracking-wide text-white mb-5 sm:mb-6">Оформление</h2>
+                        
+                        <form id="donate-form" class="space-y-4 sm:space-y-5">
+                            
+                            <div class="space-y-1.5 sm:space-y-2">
+                                <label class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Сервер</label>
+                                <div class="relative" id="custom-select-wrapper">
+                                    <input type="hidden" id="server-input" name="server" value="1">
+                                    
+                                    <div id="custom-select-btn" class="w-full bg-[#0d0d12] hover:bg-[#121217] border border-white/5 hover:border-white/10 text-white text-xs sm:text-sm font-bold rounded-xl pl-10 sm:pl-12 pr-6 py-3.5 sm:py-4 outline-none transition-all cursor-pointer flex items-center justify-between select-none">
+                                        <div class="absolute inset-y-0 left-3.5 sm:left-5 flex items-center pointer-events-none text-red-500/80">
+                                            <i class="fa-solid fa-server text-xs sm:text-sm"></i>
+                                        </div>
+                                        <span id="custom-select-text">Центральный Округ #1</span>
+                                        <i id="custom-select-arrow" class="fa-solid fa-angle-down text-gray-400 transition-transform duration-300 text-xs"></i>
+                                    </div>
+
+                                    <div id="custom-select-dropdown" class="absolute z-[100] w-full mt-2 bg-[#0a0a0d] border border-white/10 rounded-xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.8)] opacity-0 invisible transform -translate-y-2 transition-all duration-300 origin-top">
+                                        <div class="select-option px-4 sm:px-5 py-3 sm:py-4 hover:bg-red-500/10 hover:text-red-400 text-xs sm:text-sm font-bold text-white cursor-pointer transition-colors border-b border-white/5 flex items-center gap-3" data-value="1">
+                                            <i class="fa-solid fa-server text-red-500/50 text-[10px] sm:text-xs"></i> Центральный Округ #1
+                                        </div>
+                                        <div class="select-option px-4 sm:px-5 py-3 sm:py-4 hover:bg-red-500/10 hover:text-red-400 text-xs sm:text-sm font-bold text-gray-400 cursor-pointer transition-colors border-b border-white/5 flex items-center gap-3" data-value="2">
+                                            <i class="fa-solid fa-vial text-red-500/50 text-[10px] sm:text-xs"></i> Северный Округ #2
+                                        </div>
+                                        <div class="select-option px-4 sm:px-5 py-3 sm:py-4 hover:bg-red-500/10 hover:text-red-400 text-xs sm:text-sm font-bold text-gray-400 cursor-pointer transition-colors border-b border-white/5 flex items-center gap-3" data-value="3">
+                                            <i class="fa-solid fa-vial text-red-500/50 text-[10px] sm:text-xs"></i> Южный Округ #3
+                                        </div>
+                                        <div class="select-option px-4 sm:px-5 py-3 sm:py-4 hover:bg-red-500/10 hover:text-red-400 text-xs sm:text-sm font-bold text-gray-400 cursor-pointer transition-colors flex items-center gap-3" data-value="4">
+                                            <i class="fa-solid fa-vial text-red-500/50 text-[10px] sm:text-xs"></i> Западный Округ #4
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5 sm:space-y-2">
+                                <label class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">ID Игрока</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-3.5 sm:left-5 flex items-center pointer-events-none text-gray-500">
+                                        <i class="fa-solid fa-id-card text-xs sm:text-sm"></i>
+                                    </div>
+                                    <input type="text" placeholder="Например: 123-456" required class="w-full bg-[#050507] border border-white/10 text-white text-xs sm:text-sm font-medium rounded-xl pl-10 sm:pl-12 pr-5 py-3.5 sm:py-4 outline-none transition-all focus:border-red-500 placeholder-gray-600">
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5 sm:space-y-2">
+                                <label class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Сумма пополнения (RUB)</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-3.5 sm:left-5 flex items-center pointer-events-none text-gray-500">
+                                        <i class="fa-solid fa-ruble-sign text-xs sm:text-sm"></i>
+                                    </div>
+                                    <input type="number" id="amount-input" placeholder="0" min="10" required class="w-full bg-[#050507] border border-white/10 text-white text-base sm:text-lg font-bold rounded-xl pl-10 sm:pl-12 pr-14 sm:pr-16 py-3.5 sm:py-4 outline-none transition-all focus:border-red-500 placeholder-gray-600">
+                                    <div class="absolute inset-y-0 right-4 sm:right-5 flex items-center pointer-events-none text-red-500 font-black text-[10px] sm:text-sm">
+                                        RUB
+                                    </div>
+                                </div>
+                                <p class="text-[9px] sm:text-[10px] text-gray-500 font-medium ml-1 mt-1 break-words">1 Рубль = 1 LiveCoin. Минимальная сумма: 100₽</p>
+                            </div>
+
+                            <div class="pt-3 sm:pt-4">
+                                <button type="submit" class="w-full bg-red-500 active:bg-red-600 hover:bg-red-400 text-white font-black px-6 py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm uppercase tracking-widest transition-all glow-red active:scale-[0.98] shadow-lg shadow-red-500/20 flex items-center justify-center gap-2 group">
+                                    Перейти к оплате
+                                    <i class="fa-solid fa-arrow-right text-[10px] sm:text-xs group-hover:translate-x-1 transition-transform"></i>
+                                </button>
+                                <p class="text-center text-[9px] sm:text-[10px] text-gray-500 font-medium mt-3">Нажимая кнопку, вы соглашаетесь с договором оферты.</p>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2 flex flex-col gap-5 sm:gap-6 mt-2 lg:mt-0">
+                    
+                    <div>
+                        <h3 class="text-base sm:text-xl font-black uppercase tracking-wide text-white mb-3 sm:mb-4">Быстрый выбор</h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
+                            
+                            <label class="cursor-pointer relative">
+                                <input type="radio" name="package" value="500" class="peer hidden package-radio" onclick="document.getElementById('amount-input').value = this.value">
+                                <div class="border border-white/10 bg-[#121217]/50 rounded-xl p-3 sm:p-4 text-center transition-all hover:bg-white/5">
+                                    <div class="text-red-500 mb-1"><i class="fa-solid fa-coins text-base sm:text-xl"></i></div>
+                                    <div class="font-black text-sm sm:text-lg text-white">500</div>
+                                    <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-500">LiveCoins</div>
+                                </div>
+                            </label>
+
+                            <label class="cursor-pointer relative">
+                                <input type="radio" name="package" value="1000" class="peer hidden package-radio" onclick="document.getElementById('amount-input').value = this.value">
+                                <div class="border border-white/10 bg-[#121217]/50 rounded-xl p-3 sm:p-4 text-center transition-all hover:bg-white/5 relative overflow-hidden">
+                                    <div class="text-red-500 mb-1"><i class="fa-solid fa-sack-dollar text-base sm:text-xl drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]"></i></div>
+                                    <div class="font-black text-sm sm:text-lg text-white">1000</div>
+                                    <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-500">LiveCoins</div>
+                                </div>
+                            </label>
+
+                            <label class="cursor-pointer relative col-span-2 sm:col-span-1">
+                                <input type="radio" name="package" value="5000" class="peer hidden package-radio" onclick="document.getElementById('amount-input').value = this.value">
+                                <div class="border border-white/10 bg-[#121217]/50 rounded-xl p-3 sm:p-4 text-center transition-all hover:bg-white/5">
+                                    <div class="text-red-500 mb-1"><i class="fa-solid fa-gem text-base sm:text-xl"></i></div>
+                                    <div class="font-black text-sm sm:text-lg text-white">5000</div>
+                                    <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-500">LiveCoins</div>
+                                </div>
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <div class="bg-[#0d0d12]/80 border border-white/5 rounded-2xl p-5 sm:p-6 mt-1 sm:mt-2">
+                        <h3 class="text-xs sm:text-sm font-black uppercase tracking-widest text-white mb-3 sm:mb-4 border-b border-white/5 pb-2 sm:pb-3">Что дает донат валюта?</h3>
+                        <ul class="space-y-3 sm:space-y-4">
+                            <li class="flex items-start gap-2.5 sm:gap-3">
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-star text-xs sm:text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs sm:text-sm font-bold text-white mb-0.5">VIP Статусы</h4>
+                                    <p class="text-[10px] sm:text-xs text-gray-400 font-medium leading-relaxed">Ускоренная прокачка, повышенная зарплата, увеличенный инвентарь и уникальные возможности.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-2.5 sm:gap-3">
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-car-side text-xs sm:text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs sm:text-sm font-bold text-white mb-0.5">Эксклюзивный транспорт</h4>
+                                    <p class="text-[10px] sm:text-xs text-gray-400 font-medium leading-relaxed">Доступ к редким автомобилям в автосалоне, которые нельзя купить за обычные доллары.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-2.5 sm:gap-3">
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-green-500/10 border border-green-500/20 text-green-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-money-bill-transfer text-xs sm:text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs sm:text-sm font-bold text-white mb-0.5">Конвертация в игровую валюту</h4>
+                                    <p class="text-[10px] sm:text-xs text-gray-400 font-medium leading-relaxed">Моментальный обмен LiveCoins на внутриигровые доллары по выгодному курсу.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section class="border-t border-white/[0.02] bg-[#050507] py-10 sm:py-12 scroll-reveal">
+        <div class="max-w-[1000px] mx-auto px-4 sm:px-6 text-center">
+            <div class="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 text-gray-400 mb-3 sm:mb-4">
+                <i class="fa-solid fa-headset text-lg sm:text-xl"></i>
+            </div>
+            <h2 class="text-lg sm:text-2xl font-black uppercase tracking-wide text-white mb-2">Проблемы с оплатой?</h2>
+            <p class="text-gray-400 text-[11px] sm:text-sm font-medium mb-6 sm:mb-8">Если у вас возникли трудности или средства не поступили на аккаунт в течение 15 минут, обратитесь в нашу службу поддержки.</p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                <a href="https://forum.liverp.ru/forums/soobshchit-o-bage.44/" target="_blank" class="w-full sm:w-auto bg-[#121217] hover:bg-[#1a1a20] text-white border border-white/10 hover:border-red-500/30 font-bold px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl text-[10px] sm:text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-comments text-gray-400"></i> Форум поддержки
+                </a>
+                <a href="https://t.me/TechnicalSupportLiveRp_bot" target="_blank" class="w-full sm:w-auto bg-[#24a1de]/10 hover:bg-[#24a1de]/20 text-white border border-[#24a1de]/30 hover:border-[#24a1de]/50 font-bold px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl text-[10px] sm:text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-telegram text-[#24a1de] text-sm"></i> Написать в Telegram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#040405] border-t border-white/[0.02] pt-10 sm:pt-16 pb-6 sm:pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-10 text-left">
+                
+                <div class="space-y-2 sm:space-y-3 col-span-1 sm:col-span-2 md:col-span-1">
+                    <span class="text-lg sm:text-xl font-black tracking-widest uppercase italic text-white">
+                        <span class="text-red-500">LIVE <i class="fa-solid fa-heartbeat animate-pulse ml-0.5 text-base sm:text-lg"></i></span>RP
+                    </span>
+                    <p class="text-gray-500 text-[10px] sm:text-[11px] leading-relaxed font-medium">Игровой server мультиплеера RAGE MP. Take-Two Interactive, Rockstar Games не имеют отношения к проекту.</p>
+                </div>
+                
+                <div>
+                    <h5 class="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.15em] text-white mb-2 sm:mb-3">Навигация</h5>
+                    <ul class="space-y-1.5 sm:space-y-2 text-[11px] sm:text-xs text-gray-400 font-medium">
+                        <li><a href="https://forum.liverp.ru/" target="_blank" class="hover:text-red-500 transition-colors">Официальный Форум</a></li>
+                        <li><a href="#" class="hover:text-red-500 transition-colors">Пополнение счета (Донат)</a></li>
+                        <li><a href="https://forum.liverp.ru/forums/obshchiye-pravila-proyekta.2/" target="_blank" class="hover:text-red-500 transition-colors">Общие правила</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.15em] text-white mb-2 sm:mb-3">Документы</h5>
+                    <ul class="space-y-1.5 sm:space-y-2 text-[11px] sm:text-xs text-gray-400 font-medium">
+                        <li><a href="#" class="hover:text-red-500 transition-colors">Соглашение оферты</a></li>
+                        <li><a href="#" class="hover:text-red-500 transition-colors">Конфиденциальность</a></li>
+                        <li><a href="#" class="hover:text-red-500 transition-colors">Правила возврата</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.15em] text-white mb-2 sm:mb-3">Контакты</h5>
+                    <p class="text-gray-500 text-[10px] sm:text-xs mb-1.5 sm:mb-2 font-medium">Технические вопросы по лаунчеру:</p>
+                    <p class="text-[10px] sm:text-xs text-gray-300 font-bold hover:text-white transition-colors cursor-pointer">Email: <span class="text-gray-400 font-medium hover:text-red-400 transition-colors">support@live-rp.ru</span></p>
+                </div>
+
+            </div>
+            
+            <div class="border-t border-white/[0.02] pt-5 sm:pt-6 text-center text-[10px] sm:text-[11px] text-gray-600 space-y-1 font-medium">
+                <p>© 2026 LIVE RP. Все права сохранены за правообладателями.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Мобильное меню
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mobileMenu.classList.toggle('hidden');
+        });
+        document.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+    }
+
+    // Кастомный Select для выбора сервера
+    const selectWrapper = document.getElementById('custom-select-wrapper');
+    const selectBtn = document.getElementById('custom-select-btn');
+    const selectDropdown = document.getElementById('custom-select-dropdown');
+    const selectArrow = document.getElementById('custom-select-arrow');
+    const selectText = document.getElementById('custom-select-text');
+    const serverInput = document.getElementById('server-input');
+    const options = document.querySelectorAll('.select-option');
+
+    if (selectBtn) {
+        selectBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isExpanded = selectDropdown.classList.contains('opacity-100');
+            
+            if (isExpanded) {
+                closeSelect();
+            } else {
+                selectDropdown.classList.remove('opacity-0', 'invisible', '-translate-y-2');
+                selectDropdown.classList.add('opacity-100', 'visible', 'translate-y-0');
+                selectArrow.classList.add('rotate-180');
+                selectBtn.classList.add('border-red-500/50', 'shadow-[0_0_15px_rgba(239,68,68,0.2)]');
+            }
+        });
+
+        options.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Меняем текст и убираем серый цвет, если был выбран неактивный элемент
+                selectText.innerText = option.innerText;
+                serverInput.value = option.getAttribute('data-value');
+                
+                // Делаем все опции белыми, кроме выбранной
+                options.forEach(opt => opt.classList.replace('text-gray-400', 'text-white'));
+                
+                closeSelect();
+            });
+        });
+
+        document.addEventListener('click', closeSelect);
+
+        function closeSelect() {
+            selectDropdown.classList.add('opacity-0', 'invisible', '-translate-y-2');
+            selectDropdown.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            selectArrow.classList.remove('rotate-180');
+            selectBtn.classList.remove('border-red-500/50', 'shadow-[0_0_15px_rgba(239,68,68,0.2)]');
+        }
+    }
+
+    // Обработка формы
+    document.getElementById('donate-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const amount = document.getElementById('amount-input').value;
+        const server = document.getElementById('server-input').value;
+        
+        if(amount < 100) {
+            alert('Минимальная сумма пополнения - 100 рублей.');
+            return;
+        }
+        alert('Переход на платежный шлюз... (Сервер ID: ' + server + ', Сумма: ' + amount + ' руб.)');
+    });
+
+    // Анимация скролла
+    const revealElements = document.querySelectorAll('.scroll-reveal');
+    const revealOnScroll = () => {
+        revealElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.9) {
+                el.classList.add('active');
+            }
+        });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+    </script>
+</body>
+</html>
