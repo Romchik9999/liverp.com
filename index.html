@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LIVE RP | Проект GTA 5 RolePlay</title>
     
+    <link rel="icon" type="image/png" href="image/logo.png">
+    <link rel="apple-touch-icon" href="image/logo.png">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -13,7 +16,7 @@
         .hero-bg {
             position: relative;
             background: radial-gradient(circle at 50% 50%, rgba(20, 0, 0, 0.6) 0%, rgba(10, 10, 12, 1) 100%), 
-                        url('background.jpg') no-repeat center center/cover;
+                        url('image/background.jpg') no-repeat center center/cover;
             background-size: cover;
             overflow: hidden;
         }
@@ -51,34 +54,26 @@
 
         /* Объемные прозрачные цифры */
         .step-number {
-    font-size: 3.5rem;
-    font-weight: 900;
-    line-height: 0.6;
-    margin-bottom: -5px;
-    background: linear-gradient(to bottom, rgba(239, 68, 68, 0.2) 0%, rgba(255, 255, 255, 0.01) 100%);
-    
-    /* 1. Пишем вендорные префиксы для Safari/Chrome */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    
-    /* 2. Добавляем стандартное свойство для валидатора VS Code */
-    background-clip: text; 
-    
-    transition: all 0.5s ease;
-     }
-
-    @media (min-width: 1024px) {
-        .group:hover .step-number {
-            background: linear-gradient(to bottom, rgba(239, 68, 68, 0.5) 0%, rgba(239, 68, 68, 0.05) 100%);
-            
-            /* Повторяем ту же фиксацию здесь */
+            font-size: 4.5rem;
+            font-weight: 950;
+            line-height: 1;
+            padding: 0.2rem 0;
+            background: linear-gradient(to bottom, rgba(239, 68, 68, 0.25) 0%, rgba(255, 255, 255, 0.02) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            
-            transform: scale(1.05) translateY(-8px);
+            background-clip: text; 
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-}
+
+        @media (min-width: 1024px) {
+            .group:hover .step-number {
+                background: linear-gradient(to bottom, rgba(239, 68, 68, 0.6) 0%, rgba(239, 68, 68, 0.05) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                transform: scale(1.08) translateY(-4px);
+            }
+        }
 
         /* Навигационные ссылки */
         .nav-link::after {
@@ -97,7 +92,7 @@
             width: 100%;
         }
 
-        /* Скрытие скроллбара и поддержка тач-паддингов */
+        /* Скрытие скроллбара */
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -107,7 +102,7 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* Анимация контента */
+        /* Анимации контента */
         @keyframes revealContent {
             from { opacity: 0; transform: translateY(15px); filter: blur(5px); }
             to { opacity: 1; transform: translateY(0); filter: blur(0); }
@@ -126,19 +121,22 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Эффект наклона разделителя в баннере */
+        .skew-decor {
+            transform: skewX(-12deg);
+        }
     </style>
 </head>
 <body class="bg-[#060608] text-white overflow-x-hidden antialiased select-none sm:select-text">
 
-    <!-- НАВИГАЦИЯ -->
-    <nav class="border-b border-white/[0.03] bg-[#060608]/90 backdrop-blur-xl sticky top-0 z-50 h-20 lg:h-24 transition-all duration-300">
+    <nav class="border-b border-white/[0.03] bg-[#060608]/90 backdrop-blur-xl sticky top-0 z-50 h-24 lg:h-28 transition-all duration-300">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 h-full flex items-center justify-between">
             
             <div class="flex items-center gap-12">
-                <!-- Блок логотипа: h-11 на телефонах, h-14 на планшетах, lg:h-20 и xl:h-24 на ПК -->
-                <a href="#" class="flex items-center gap-3 sm:gap-4 group">
-                    <img src="logo.png" alt="Logo" class="h-11 sm:h-14 lg:h-20 xl:h-24 w-auto object-contain transition-transform duration-300 lg:group-hover:scale-105" onError="this.style.display='none'">
-                    <span class="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-black tracking-widest uppercase italic text-white leading-none">
+                <a href="#" class="flex items-center gap-4 sm:gap-5 group">
+                    <img src="image/logo.png" alt="Logo" class="h-14 sm:h-16 lg:h-24 xl:h-26 w-auto object-contain transition-transform duration-300 lg:group-hover:scale-105" onError="this.style.display='none'">
+                    <span class="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black tracking-widest uppercase italic text-white leading-none">
                         <span class="text-red-500">LIVE</span>RP
                     </span>
                 </a>
@@ -158,7 +156,7 @@
                     <a href="https://discord.gg/QWgdESwX" target="_blank" class="hover:text-[#5865f2] transition-colors"><i class="fa-brands fa-discord"></i></a>
                 </div>
 
-                <a href="#start" class="bg-red-500 active:bg-red-600 lg:hover:bg-red-600 text-white font-black px-4 sm:px-5 py-2.5 rounded-xl text-[11px] uppercase tracking-widest transition-all glow-red active:scale-95 whitespace-nowrap">
+                <a href="#start" class="bg-red-500 active:bg-red-600 lg:hover:bg-red-600 text-white font-black px-5 sm:px-6 py-3 rounded-xl text-xs uppercase tracking-widest transition-all glow-red active:scale-95 whitespace-nowrap">
                     Играть <i class="fa-solid fa-play ml-1 text-[8px]"></i>
                 </a>
 
@@ -168,8 +166,7 @@
             </div>
         </div>
 
-        <!-- МОБИЛЬНОЕ ВЫПАДАЮЩЕЕ МЕНЮ -->
-        <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-[#0b0b0e] border-b border-white/[0.06] flex flex-col p-5 space-y-1 text-center text-sm font-black tracking-widest uppercase lg:hidden z-40 shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
+        <div id="mobile-menu" class="hidden absolute top-24 left-0 w-full bg-[#0b0b0e] border-b border-white/[0.06] flex flex-col p-5 space-y-1 text-center text-sm font-black tracking-widest uppercase lg:hidden z-40 shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
             <a href="https://forum.liverp.ru/" target="_blank" class="text-white active:text-red-500 py-3.5 border-b border-white/[0.04] transition-colors">Форум</a>
             <a href="" target="_blank" class="text-white active:text-red-500 py-3.5 border-b border-white/[0.04] transition-colors">Донат</a>
             <a href="https://forum.liverp.ru/forums/obshchiye-pravila-proyekta.2/" target="_blank" class="text-white active:text-red-500 py-3.5 border-b border-white/[0.04] transition-colors">Правила</a>
@@ -183,43 +180,109 @@
         </div>
     </nav>
 
-    <!-- ГЛАВНЫЙ ЭКРАН -->
-    <header class="hero-bg min-h-[calc(100vh-5rem)] flex flex-col justify-center items-center text-center px-4 py-8 sm:py-12 relative">
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-64 sm:w-96 h-64 sm:h-96 bg-red-600/10 blur-[80px] sm:blur-[150px] rounded-full pointer-events-none"></div>
+    <header class="hero-bg min-h-[calc(100vh-6rem)] flex items-center justify-center px-4 py-12 md:py-20 relative">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 blur-[150px] rounded-full pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-600/5 blur-[150px] rounded-full pointer-events-none"></div>
 
-        <div class="max-w-4xl mx-auto space-y-6 sm:space-y-8 relative z-10 w-full">
-            <h1 class="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black uppercase italic tracking-tight leading-[1.1] sm:leading-none">
-                Твоя новая жизнь в <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-red-600 drop-shadow-[0_4px_10px_rgba(239,68,68,0.25)]">GTA 5 RolePlay</span>
-            </h1>
+        <div class="max-w-[1400px] mx-auto w-full flex flex-col lg:flex-row items-center justify-between gap-8 xl:gap-12 relative z-10">
             
-            <p class="text-gray-400 max-w-xl mx-auto text-xs sm:text-base md:text-lg font-medium leading-relaxed px-2 sm:px-0">
-                LIVE RP — уникальный ролевой мир со стабильным лаунчером, продвинутыми государственными структурами и отзывчивой администрацией.
-            </p>
-            
-            <div class="inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-4 bg-black/50 backdrop-blur-md px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-white/5 shadow-xl">
-                <div class="flex items-center gap-2 relative">
-                    <span class="w-2 h-2 bg-red-500 rounded-full shadow-[0_0_8px_#ef4444] animate-ping absolute"></span>
-                    <span class="w-2 h-2 bg-red-500 rounded-full shadow-[0_0_8px_#ef4444] relative inline-block"></span>
-                    <span class="text-[10px] sm:text-xs uppercase font-black tracking-widest text-gray-300 ml-1.5">Сервер LIVE #1</span>
+            <div class="w-full lg:w-[52%] text-center lg:text-left space-y-6 sm:space-y-8 flex flex-col items-center lg:items-start lg:pr-4">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-black uppercase italic tracking-tight leading-[1.1]">
+                    Твоя новая жизнь в <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-red-600 drop-shadow-[0_4px_10px_rgba(239,68,68,0.25)]">GTA 5 RolePlay</span>
+                </h1>
+                
+                <p class="text-gray-400 max-w-xl text-sm sm:text-base md:text-lg font-medium leading-relaxed">
+                    LIVE RP — уникальный ролевой мир со стабильным лаунчером, продвинутыми государственными структурами и отзывчивой администрацией.
+                </p>
+                
+                <div class="inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-4 bg-black/50 backdrop-blur-md px-5 py-3 rounded-xl border border-white/5 shadow-xl">
+                    <div class="flex items-center gap-2 relative">
+                        <span class="w-2 h-2 bg-red-500 rounded-full shadow-[0_0_8px_#ef4444] animate-ping absolute"></span>
+                        <span class="w-2 h-2 bg-red-500 rounded-full shadow-[0_0_8px_#ef4444] relative inline-block"></span>
+                        <span class="text-[10px] sm:text-xs uppercase font-black tracking-widest text-gray-300 ml-1.5">Сервер LIVE #1</span>
+                    </div>
+                    <div class="hidden sm:block w-[1px] h-3 bg-white/10"></div>
+                    <div class="text-xs sm:text-sm font-bold tracking-wide">
+                        <span class="text-red-500 text-base sm:text-xl font-black tabular-nums" id="online-count">748</span>
+                        <span class="text-gray-400 font-medium">/ 1000 игроков</span>
+                    </div>
                 </div>
-                <div class="hidden sm:block w-[1px] h-3 bg-white/10"></div>
-                <div class="text-xs sm:text-sm font-bold tracking-wide">
-                    <span class="text-red-500 text-base sm:text-xl font-black tabular-nums" id="online-count">748</span>
-                    <span class="text-gray-400 font-medium">/ 1000 игроков</span>
+
+                <div class="pt-2 w-full sm:w-auto">
+                    <a href="#start" class="inline-block text-center w-full sm:w-auto bg-red-500 active:bg-red-600 lg:hover:bg-red-600 px-12 py-4 rounded-xl font-black uppercase glow-red text-sm tracking-widest active:scale-95 transition-all">
+                        Скачать лаунчер
+                    </a>
                 </div>
             </div>
 
-            <div class="pt-2">
-                <a href="#start" class="inline-block w-full sm:w-auto bg-red-500 active:bg-red-600 lg:hover:bg-red-600 px-8 sm:px-12 py-4 rounded-xl sm:rounded-2xl font-black uppercase glow-red text-center text-xs sm:text-sm tracking-widest active:scale-95 transition-transform">
-                    Скачать лаунчер
-                </a>
+            <div class="w-full lg:w-[45%] bg-[#0a0a0c]/90 border border-white/[0.05] rounded-3xl relative overflow-hidden shadow-2xl flex flex-col sm:flex-row items-stretch min-h-[250px] lg:min-h-[270px]">
+                
+                <div class="flex-grow p-6 sm:p-8 flex flex-col justify-center space-y-4 sm:max-w-[55%] relative z-10 text-left">
+                    <div class="flex items-center">
+                        <span class="bg-[#1f0d10] border border-red-500/30 text-red-500 text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-md flex items-center gap-1.5 shadow-[0_0_10px_rgba(239,68,68,0.1)]">
+                            <i class="fa-solid fa-fire text-[9px] animate-pulse"></i> Успевай получить бонус
+                        </span>
+                    </div>
+                    
+                    <h2 class="text-2xl sm:text-3xl font-black uppercase italic tracking-tight text-white leading-tight">
+                        ПО <span class="text-red-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.4)]">ПРОМОКОДУ</span>
+                    </h2>
+                    
+                    <p class="text-gray-400 text-[11px] sm:text-xs font-medium leading-relaxed">
+                        Введи код в игре или при регистрации, чтобы получить эксклюзивную валюту и премиум-статус на старте.
+                    </p>
+                    
+                    <div class="space-y-3 pt-1">
+                        <div onclick="copyPromo()" class="bg-[#121216] border border-white/5 hover:border-red-500/30 transition-all px-4 py-3 rounded-xl flex items-center gap-2 cursor-pointer group/promo justify-between w-full">
+                            <span id="promo-text" class="font-black text-xs tracking-widest text-white uppercase select-all">LOVELIVERP</span>
+                            <i id="promo-icon" class="fa-regular fa-copy text-gray-500 group-hover/promo:text-red-500 transition-colors text-xs"></i>
+                        </div>
+                        
+                        <a href="#start" class="w-full bg-red-500 hover:bg-red-600 text-white font-black py-3.5 rounded-xl text-[10px] uppercase tracking-widest transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-red-500/10 glow-red text-center">
+                            <i class="fa-solid fa-cloud-download text-[10px]"></i> Скачать лаунчер
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hidden sm:flex relative w-[45%] overflow-hidden bg-[#0e0e11] items-center justify-center">
+                    <div class="absolute -left-12 top-0 bottom-0 w-24 bg-red-500 skew-decor opacity-90 z-20 shadow-[0_0_40px_rgba(239,68,68,0.5)] border-r-4 border-red-400"></div>
+                    
+                    <div class="absolute inset-0 z-10 origin-right pl-6">
+                        <img src="image/promo-bg.jpg" alt="Promo Background" class="w-full h-full object-cover filter brightness-[0.55] contrast-[1.1]" onError="this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800'">
+                    </div>
+
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#0a0a0c] via-transparent to-transparent z-15"></div>
+                </div>
             </div>
+
         </div>
     </header>
 
-    <!-- ИГРОВЫЕ ФРАКЦИИ / ПРОФЕССИИ -->
-    <section id="factions" class="max-w-[1400px] mx-auto px-4 sm:px-6 py-12 sm:py-24 border-t border-white/[0.02] scroll-reveal">
+    <section class="border-y border-white/[0.02] bg-[#08080a]/50 backdrop-blur-md py-8 sm:py-12 scroll-reveal">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="space-y-1">
+                    <div class="text-2xl sm:text-4xl font-black text-white italic uppercase tracking-tight"><span class="text-red-500">15+</span> фракций</div>
+                    <div class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">Огромный выбор ролей</div>
+                </div>
+                <div class="space-y-1 border-l border-white/5">
+                    <div class="text-2xl sm:text-4xl font-black text-white italic uppercase tracking-tight"><span class="text-red-500">0.1</span> сек</div>
+                    <div class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">Пинг интерфейсов</div>
+                </div>
+                <div class="space-y-1 border-l border-white/5">
+                    <div class="text-2xl sm:text-4xl font-black text-white italic uppercase tracking-tight"><span class="text-red-500">500+</span> авто</div>
+                    <div class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">Собственный автопарк</div>
+                </div>
+                <div class="space-y-1 border-l border-white/5">
+                    <div class="text-2xl sm:text-4xl font-black text-white italic uppercase tracking-tight"><span class="text-red-500">24/7</span> АДМИНЫ</div>
+                    <div class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">Моментальная помощь</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="factions" class="max-w-[1400px] mx-auto px-4 sm:px-6 py-12 sm:py-24 scroll-reveal">
         <div class="flex flex-col lg:flex-row gap-5 lg:gap-8 items-stretch lg:h-[600px] xl:h-[680px]">
             
             <div class="w-full lg:w-1/3 xl:w-1/4 bg-[#0a0a0d] border border-white/[0.04] rounded-[20px] sm:rounded-[32px] p-3 sm:p-4 flex flex-col relative overflow-hidden shadow-xl">
@@ -275,7 +338,6 @@
         </div>
     </section>
 
-    <!-- ПРЕИМУЩЕСТВА -->
     <section class="max-w-[1400px] mx-auto px-4 sm:px-6 py-12 sm:py-20 border-t border-white/[0.02] scroll-reveal">
         <div class="text-center mb-8 sm:mb-14 relative">
             <h2 class="text-xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight">Почему выбирают <span class="text-red-500 italic">LIVE RP</span>?</h2>
@@ -317,20 +379,19 @@
         </div>
     </section>
 
-    <!-- БЫСТРЫЙ СТАРТ -->
     <section id="start" class="bg-black/20 border-y border-white/[0.02] py-12 sm:py-24 scroll-reveal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-            <h2 class="text-2xl sm:text-4xl font-black uppercase tracking-wide mb-10 sm:mb-16">Быстрый <span class="text-red-500">старт</span></h2>
+            <h2 class="text-2xl sm:text-4xl font-black uppercase tracking-wide mb-10 sm:mb-16">Как <span class="text-red-500">начать играть</span></h2>
             <div class="grid md:grid-cols-3 gap-5 relative z-10">
                 
-                <div class="relative p-5 sm:p-8 bg-[#0a0a0d]/40 border border-white/[0.04] rounded-[16px] sm:rounded-[24px] group pt-8 sm:pt-12">
+                <div class="relative p-5 sm:p-8 bg-[#0a0a0d]/40 border border-white/[0.04] rounded-[16px] sm:rounded-[24px] group pt-6">
                     <div class="step-number mx-auto mb-2">01</div>
                     <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-center mx-auto text-base text-red-500"><i class="fa-brands fa-steam"></i></div>
                     <h4 class="text-sm sm:text-base font-black mt-3.5 sm:mt-4 uppercase tracking-widest text-white">Лицензия GTA 5</h4>
                     <p class="text-gray-400 mt-2 text-xs sm:text-sm leading-relaxed font-medium">Подойдет абсолютно любая официальная версия игры (Steam, Epic Games, Rockstar).</p>
                 </div>
                 
-                <div class="relative p-5 sm:p-8 bg-[#0a0a0d]/40 border border-white/[0.04] rounded-[16px] sm:rounded-[24px] group pt-8 sm:pt-12">
+                <div class="relative p-5 sm:p-8 bg-[#0a0a0d]/40 border border-white/[0.04] rounded-[16px] sm:rounded-[24px] group pt-6">
                     <div class="step-number mx-auto mb-2">02</div>
                     <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-center mx-auto text-base text-red-500"><i class="fa-solid fa-download"></i></div>
                     <h4 class="text-sm sm:text-base font-black mt-3.5 sm:mt-4 uppercase tracking-widest text-white">Наш лаунчер</h4>
@@ -338,7 +399,7 @@
                     <a href="launcher.exe" download class="inline-block mt-4 bg-red-500 active:bg-red-600 text-white px-6 py-2.5 rounded-lg text-[10px] font-black transition-colors uppercase tracking-widest">Скачать</a>
                 </div>
                 
-                <div class="relative p-5 sm:p-8 bg-[#0a0a0d]/40 border border-white/[0.04] rounded-[16px] sm:rounded-[24px] group pt-8 sm:pt-12">
+                <div class="relative p-5 sm:p-8 bg-[#0a0a0d]/40 border border-white/[0.04] rounded-[16px] sm:rounded-[24px] group pt-6">
                     <div class="step-number mx-auto mb-2">03</div>
                     <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/[0.02] border border-white/5 flex items-center justify-center mx-auto text-base text-red-500"><i class="fa-solid fa-plug"></i></div>
                     <h4 class="text-sm sm:text-base font-black mt-3.5 sm:mt-4 uppercase tracking-widest text-white">Подключение</h4>
@@ -349,7 +410,6 @@
         </div>
     </section>
 
-    <!-- ПОДВАЛ -->
     <footer class="bg-[#040405] border-t border-white/[0.02] pt-12 sm:pt-16 pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10 text-left">
@@ -358,7 +418,7 @@
                     <span class="text-xl font-black tracking-widest uppercase italic text-white">
                         <span class="text-red-500">LIVE <i class="fa-solid fa-heartbeat animate-pulse ml-0.5 text-lg"></i></span>RP
                     </span>
-                    <p class="text-gray-500 text-[11px] leading-relaxed font-medium">Игровой сервер мультиплеера RAGE MP. Take-Two Interactive, Rockstar Games не имеют отношения к проекту.</p>
+                    <p class="text-gray-500 text-[11px] leading-relaxed font-medium">Игровой server мультиплеера RAGE MP. Take-Two Interactive, Rockstar Games не имеют отношения к проекту.</p>
                 </div>
                 
                 <div>
@@ -394,6 +454,21 @@
     </footer>
 
     <script>
+    // Реальный скрипт для копирования промокода
+    function copyPromo() {
+        const promoText = document.getElementById('promo-text').innerText;
+        const icon = document.getElementById('promo-icon');
+        
+        navigator.clipboard.writeText(promoText).then(() => {
+            icon.className = "fa-solid fa-check text-green-400";
+            setTimeout(() => {
+                icon.className = "fa-regular fa-copy text-gray-500";
+            }, 2000);
+        }).catch(err => {
+            console.error('Ошибка копирования: ', err);
+        });
+    }
+
     // Имитация онлайна
     const onlineSpan = document.getElementById('online-count');
     if (onlineSpan) {
@@ -424,22 +499,22 @@
 
     // База данных фракций
     const factions = [
-        { id: 'cgb', name: 'ЦГБ (Медики)', tag: 'ПОМОГАЙ ЛЮДЯМ', icon: 'fa-user-doctor', color: '#2563eb', img: 'image_9087e4.jpg', fallback: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200', desc: 'Самая почетная роль на сервере! Спасай жизни и приводи народ в чувства — ведь кто-то должен исправлять то, что натворили другие!' },
-        { id: 'mchs', name: 'МЧС', tag: 'СПАСАЙ ЖИЗНИ', icon: 'fa-fire-extinguisher', color: '#f97316', img: 'faction-mchs.jpg', fallback: 'https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=1200', desc: 'Борись с огненной стихией, вытаскивать пострадавших из завалов и ликвидируй последствия тяжелых аварий. Настоящие герои!' },
-        { id: 'smi', name: 'Новости (СМИ)', tag: 'ИНФОРМИРУЙ ШТАТ', icon: 'fa-radio', color: '#06b6d4', img: 'faction-smi.jpg', fallback: 'https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?w=1200', desc: 'Редактируй коммерческие объявления, запускай развлекательные радиоэфиры и летай на вертолете в места самых жарких погонь.' },
-        { id: 'gov', name: 'Правительство', tag: 'УПРАВЛЯЙ РЕГИОНОМ', icon: 'fa-landmark', color: '#38bdf8', img: 'faction-gov.jpg', fallback: 'https://images.unsplash.com/photo-1541872526868-a401c40217dd?w=1200', desc: 'Контролируй работу всех гос. структур сервера, распределяй казну, устанавливай налоги и проводи официальные проверки ведомств.' },
-        { id: 'prok', name: 'Прокуратура', icon: 'fa-scale-balanced', tag: 'СЛЕДИ ЗА ЗАКОНОМ', color: '#6366f1', img: 'faction-prok.jpg', fallback: 'https://images.unsplash.com/photo-1453941403708-22363a0a167d?w=1200', desc: 'Главный надзор за силовиками. Рассматривай жалобы на превышение полномочий и представляй интересы государства в судах.' },
-        { id: 'sk', name: 'Следственный Комитет', tag: 'РАСКРЫВАЙ ЗАГОВОРЫ', icon: 'fa-folder-open', color: '#06b6d4', img: 'faction-sk.jpg', fallback: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=1200', desc: 'Введи запутанные уголовные дела против чиновников и криминальных авторитетов, собирай неопровержимые улики и допрашивай.' },
-        { id: 'fsb', name: 'ФСБ', tag: 'ВЫСШАЯ БЕЗОПАСНОСТЬ', icon: 'fa-eye', color: '#ef4444', img: 'faction-fsb.jpg', fallback: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200', desc: 'Внедряйся в опасные синдикаты, проводи штурмы, борись с террористическими ячейками и держи в страхе преступный мир.' },
-        { id: 'usb', name: 'УСБ', tag: 'ВНУТРЕННИЙ НАДЗОР', icon: 'fa-building-shield', color: '#f97316', img: 'faction-usb.jpg', fallback: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1200', desc: 'Контроль чистоты рядов гос. служащих. Выявляй оборотней в погонах, взяточников и пресекай любые нарушения силовиков.' },
-        { id: 'uvd', name: 'Полиция (УВД)', tag: 'БОРЬБА С КРИМИНАЛОМ', icon: 'fa-shield-halved', color: '#3b82f6', img: 'faction-uvd.jpg', fallback: 'https://images.unsplash.com/photo-1596403289025-0e1ef563b715?w=1200', desc: 'Патрулируй спальные районы, лови грабителей и угонщиков, реагируй на вызовы граждан и оформляй протоколы задержаний.' },
-        { id: 'ugibdd', name: 'УГИБДД', tag: 'БЕЗОПАСНОСТЬ ДОРОГ', icon: 'fa-traffic-light', color: '#06b6d4', img: 'faction-ugibdd.jpg', fallback: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=1200', desc: 'Выставляй радары, проверяй документы водителей на постах, штрафуй злостных нарушителей правил движения и эвакуируй авто.' },
-        { id: 'fsvng', name: 'ФСВНГ', tag: 'СИЛОВОЙ ОТВЕТ', icon: 'fa-mask', color: '#ef4444', img: 'faction-fsvng.jpg', fallback: 'https://images.unsplash.com/photo-1508847154043-be12a62861c1?w=1200', desc: 'Обеспечивай безопасность на митингах и парадах, выезжай на силовую поддержку полиции при налетах банд и защищай конвои.' },
-        { id: 'fsin', name: 'ФСИН', tag: 'КОНТРОЛЬ ЗАКЛЮЧЕННЫХ', icon: 'fa-bars', color: '#64748b', img: 'faction-fsin.jpg', fallback: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200', desc: 'Держи строгий порядок на территории исправительной колонии. Обыскивай камеры, пресекай бунты и конвоируй преступников.' },
-        { id: 'vsrf', name: 'Армия (ВСРФ)', tag: 'ЗАЩИТА РОДИНЫ', icon: 'fa-jet-fighter', color: '#16a34a', img: 'faction-vsrf.jpg', fallback: 'https://images.unsplash.com/photo-1579716062826-c3cf27429419?w=1200', desc: 'Охраняй закрытую территорию воинской части, вози фуры со снабжением на склады гос. организаций и отбивай атаки криминала.' },
-        { id: 'trucker', name: 'Дальнобойщик', tag: 'ПЕРЕВОЗКИ', icon: 'fa-truck-moving', color: '#eab308', img: 'job-trucker.jpg', fallback: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1200', desc: 'Арендуй мощный грузовик, бери прибыльные контракты и доставляй ценное сырье между заводами и портами.' },
-        { id: 'fisherman', name: 'Рыбалка', tag: 'МИРНЫЙ ПРОМЫСЕЛ', icon: 'fa-fish-fins', color: '#0ea5e9', img: 'job-fisherman.jpg', fallback: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200', desc: 'Закупай спиннинги и редкие наживки, выплывай в море на катере и лови элитные сорта рыбы для выгодной сдачи рестораторам.' },
-        { id: 'mafia', name: 'Криминал', tag: 'ТЕНЕВОЙ КОНТРОЛЬ', icon: 'fa-user-tie', color: '#ef4444', img: 'faction-mafia.jpg', fallback: 'https://images.unsplash.com/photo-1559548233-b18361b17a1a?w=1200', desc: 'Крышуй бизнесы, совершай налеты на инкассаторов, веди скрытую торговлю контрабандой и участвуй в войнах авторитетов.' }
+        { id: 'cgb', name: 'ЦГБ (Медики)', tag: 'ПОМОГАЙ ЛЮДЯМ', icon: 'fa-user-doctor', color: '#2563eb', img: 'image/image_9087e4.jpg', fallback: 'image/ЦГБ.jpg', desc: 'Самая почетная роль на сервере! Спасай жизни и приводи народ в чувства — ведь кто-то должен исправлять то, что натворили другие!' },
+        { id: 'mchs', name: 'МЧС', tag: 'СПАСАЙ ЖИЗНИ', icon: 'fa-fire-extinguisher', color: '#f97316', img: 'image/faction-mchs.jpg', fallback: 'image/МЧС.jpg', desc: 'Борись с огненной стихией, вытаскивать пострадавших из завалов и ликвидируй последствия тяжелых аварий. Настоящие герои!' },
+        { id: 'smi', name: 'Новости (СМИ)', tag: 'ИНФОРМИРУЙ ШТАТ', icon: 'fa-radio', color: '#06b6d4', img: 'image/faction-smi.jpg', fallback: 'image/СМИ.jpg', desc: 'Редактируй коммерческие объявления, запускай развлекательные радиоэфиры и летай на вертолете в места самых жарких погонь.' },
+        { id: 'gov', name: 'Правительство', tag: 'УПРАВЛЯЙ РЕГИОНОМ', icon: 'fa-landmark', color: '#38bdf8', img: 'image/faction-gov.jpg', fallback: 'image/Правик.jpg', desc: 'Контролируй работу всех гос. структур сервера, распределяй казну, устанавливай налоги и проводи официальные проверки ведомств.' },
+        { id: 'prok', name: 'Прокуратура', icon: 'fa-scale-balanced', tag: 'СЛЕДИ ЗА ЗАКОНОМ', color: '#6366f1', img: 'image/faction-prok.jpg', fallback: 'image/faction-prok.jpg', desc: 'Главный надзор за силовиками. Рассматривай жалобы на превышение полномочий и представляй интересы государства в судах.' },
+        { id: 'sk', name: 'Следственный Комитет', tag: 'РАСКРЫВАЙ ЗАГОВОРЫ', icon: 'fa-folder-open', color: '#06b6d4', img: 'image/faction-sk.jpg', fallback: 'image/faction-sk.jpg', desc: 'Введи запутанные уголовные дела против чиновников и криминальных авторитетов, собирай неопровержимые улики и допрашивай.' },
+        { id: 'fsb', name: 'ФСБ', tag: 'ВЫСШАЯ БЕЗОПАСНОСТЬ', icon: 'fa-eye', color: '#ef4444', img: 'image/faction-fsb.jpg', fallback: 'image/faction-fsb.jpg', desc: 'Внедряйся в опасные синдикаты, проводи штурмы, борись с террористическими ячейками и держи в страхе преступный мир.' },
+        { id: 'usb', name: 'УСБ', tag: 'ВНУТРЕННИЙ НАДЗОР', icon: 'fa-building-shield', color: '#f97316', img: 'image/faction-usb.jpg', fallback: 'image/faction-usb.jpg', desc: 'Контроль чистоты рядов гос. служащих. Выявляй оборотней в погонах, взяточников и пресекай любые нарушения силовиков.' },
+        { id: 'uvd', name: 'Полиция (УВД)', tag: 'БОРЬБА С КРИМИНАЛОМ', icon: 'fa-shield-halved', color: '#3b82f6', img: 'image/faction-uvd.jpg', fallback: 'image/faction-uvd.jpg', desc: 'Патрулируй спальные районы, лови грабителей и угонщиков, реагируй на вызовы граждан и оформляй протоколы задержаний.' },
+        { id: 'ugibdd', name: 'УГИБДД', tag: 'БЕЗОПАСНОСТЬ ДОРОГ', icon: 'fa-traffic-light', color: '#06b6d4', img: 'image/faction-ugibdd.jpg', fallback: 'image/faction-ugibdd.jpg', desc: 'Выставляй радары, проверяй документы водителей на постах, штрафуй злостных нарушителей правил движения и эвакуируй авто.' },
+        { id: 'fsvng', name: 'ФСВНГ', tag: 'СИЛОВОЙ ОТВЕТ', icon: 'fa-mask', color: '#ef4444', img: 'image/faction-fsvng.jpg', fallback: 'image/faction-fsvng.jpg', desc: 'Обеспечивай безопасность на митингах и парадах, выезжай на силовую поддержку полиции при налетах банд и защищай конвои.' },
+        { id: 'fsin', name: 'ФСИН', tag: 'КОНТРОЛЬ ЗАКЛЮЧЕННЫХ', icon: 'fa-bars', color: '#64748b', img: 'image/faction-fsin.jpg', fallback: 'image/faction-fsin.jpg', desc: 'Держи строгий порядок на территории исправительной колонии. Обыскивай камеры, пресекай бунты и конвоируй преступников.' },
+        { id: 'vsrf', name: 'Армия (ВСРФ)', tag: 'ЗАЩИТА РОДИНЫ', icon: 'fa-jet-fighter', color: '#16a34a', img: 'image/faction-vsrf.jpg', fallback: 'image/faction-vsrf.jpg', desc: 'Охраняй закрытую территорию воинской части, вози фуры со снабжением на склады гос. организаций и отбивай атаки криминала.' },
+        { id: 'trucker', name: 'Дальнобойщик', tag: 'ПЕРЕВОЗКИ', icon: 'image/job-trucker.jpg', fallback: 'image/job-trucker.jpg', desc: 'Арендуй мощный грузовик, бери прибыльные контракты и доставляй ценное сырье между заводами и портами.' },
+        { id: 'fisherman', name: 'Рыбалка', tag: 'МИРНЫЙ ПРОМЫСЕЛ', icon: 'fa-fish-fins', color: '#0ea5e9', img: 'image/job-fisherman.jpg', fallback: 'image/job-fisherman.jpg', desc: 'Закупай спиннинги и редкие наживки, выплывай в море на катере и лови элитные сорта рыбы для выгодной сдачи рестораторам.' },
+        { id: 'mafia', name: 'Криминал', tag: 'ТЕНЕВОЙ КОНТРОЛЬ', icon: 'fa-user-tie', color: '#ef4444', img: 'image/faction-mafia.jpg', fallback: 'image/faction-mafia.jpg', desc: 'Крышуй бизнесы, совершай налеты на инкассаторов, веди скрытую торговлю контрабандой и участвуй в войнах авторитетов.' }
     ];
 
     let currentIdx = 0;
