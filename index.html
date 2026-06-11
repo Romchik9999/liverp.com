@@ -156,6 +156,23 @@
         .animate-content {
             animation: revealContent 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
+
+        /* === ИМИТАЦИЯ SPA-ПЕРЕХОДА === */
+        #page-content {
+            animation: contentFadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            will-change: opacity, transform;
+        }
+        #page-content.page-exit {
+            animation: contentFadeOut 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        @keyframes contentFadeIn {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes contentFadeOut {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px) scale(0.99); }
+        }
     </style>
 </head>
 <body class="bg-[#060608] text-white overflow-x-hidden antialiased select-none sm:select-text">
@@ -174,7 +191,7 @@
                 <div class="hidden lg:flex items-center gap-10 text-sm font-black tracking-widest uppercase text-gray-400">
                     <a href="#" class="hover:text-white nav-link relative py-2">Главная</a>
                     <a href="https://forum.liverp.ru/" target="_blank" class="hover:text-white nav-link relative py-2">Форум</a>
-                    <a href="donate.html" target="_blank" class="hover:text-white nav-link relative py-2">Донат</a>
+                    <a href="donate.html" class="hover:text-white nav-link relative py-2">Донат</a>
                     <a href="https://forum.liverp.ru/forums/obshchiye-pravila-proyekta.2/" target="_blank" class="hover:text-white nav-link relative py-2">Правила</a>
                     <a href="#factions" class="hover:text-white nav-link relative py-2">Фракции</a>
                 </div>
@@ -218,273 +235,305 @@
         </div>
     </nav>
 
-    <header class="hero-bg min-h-[calc(100vh-4rem)] sm:min-h-[calc(100vh-5rem)] lg:min-h-[calc(100vh-6rem)] flex flex-col justify-center py-8 md:py-16 relative">
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 blur-[150px] rounded-full pointer-events-none ambient-glow"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-600/5 blur-[150px] rounded-full pointer-events-none ambient-glow" style="animation-delay: -5s;"></div>
+    <main id="page-content">
+        <header class="hero-bg min-h-[calc(100vh-4rem)] sm:min-h-[calc(100vh-5rem)] lg:min-h-[calc(100vh-6rem)] flex flex-col justify-center py-8 md:py-16 relative">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 blur-[150px] rounded-full pointer-events-none ambient-glow"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-600/5 blur-[150px] rounded-full pointer-events-none ambient-glow" style="animation-delay: -5s;"></div>
 
-        <div class="lg:absolute lg:top-6 lg:right-6 relative w-[calc(100%-2rem)] max-w-sm lg:max-w-none lg:w-[320px] promo-anim z-30 mb-8 lg:mb-0 mx-auto lg:mx-0 self-center lg:self-auto">
-            <div class="bg-[#0a0a0c]/80 backdrop-blur-md border border-white/[0.05] rounded-3xl p-5 sm:p-6 text-left shadow-[0_10px_40px_rgba(0,0,0,0.5)] float-hover">
-                <div class="flex items-center mb-3">
-                    <span class="bg-[#1f0d10] border border-red-500/30 text-red-500 text-[9px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md flex items-center gap-1.5 shadow-[0_0_10px_rgba(239,68,68,0.1)]">
-                        <i class="fa-solid fa-fire text-[9px] animate-pulse"></i> Бонус на старте
-                    </span>
-                </div>
-                
-                <h2 class="text-xl font-black uppercase italic tracking-tight text-white leading-tight mb-2">
-                    ПО <span class="text-red-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.4)]">ПРОМОКОДУ</span>
-                </h2>
-                
-                <p class="text-gray-400 text-[10px] sm:text-xs font-medium leading-relaxed mb-4">
-                    Введи код при регистрации, чтобы получить валюту и премиум-статус.
-                </p>
-                
-                <div class="space-y-2">
-                    <div onclick="copyPromo()" class="bg-[#121216] border border-white/5 hover:border-red-500/30 transition-all px-4 py-2.5 rounded-xl flex items-center gap-2 cursor-pointer group/promo justify-between w-full">
-                        <span id="promo-text" class="font-black text-xs tracking-widest text-white uppercase select-all">LOVELVRP</span>
-                        <i id="promo-icon" class="fa-regular fa-copy text-gray-500 group-hover/promo:text-red-500 transition-colors text-xs"></i>
+            <div class="lg:absolute lg:top-6 lg:right-6 relative w-[calc(100%-2rem)] max-w-sm lg:max-w-none lg:w-[320px] promo-anim z-30 mb-8 lg:mb-0 mx-auto lg:mx-0 self-center lg:self-auto">
+                <div class="bg-[#0a0a0c]/80 backdrop-blur-md border border-white/[0.05] rounded-3xl p-5 sm:p-6 text-left shadow-[0_10px_40px_rgba(0,0,0,0.5)] float-hover">
+                    <div class="flex items-center mb-3">
+                        <span class="bg-[#1f0d10] border border-red-500/30 text-red-500 text-[9px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md flex items-center gap-1.5 shadow-[0_0_10px_rgba(239,68,68,0.1)]">
+                            <i class="fa-solid fa-fire text-[9px] animate-pulse"></i> Бонус на старте
+                        </span>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="max-w-[1400px] mx-auto w-full relative z-10 flex flex-col items-center px-4 sm:px-6">
-            <div class="w-full text-center space-y-6 flex flex-col items-center max-w-4xl xl:pt-12 relative z-10">
-                
-                <h1 class="text-5xl sm:text-6xl md:text-7xl xl:text-[80px] font-black uppercase italic tracking-tight leading-[1.05] drop-shadow-xl">
-                    Твоя новая жизнь&nbsp;В <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-red-600 drop-shadow-[0_4px_10px_rgba(239,68,68,0.25)]">GTA 5 RolePlay</span>
-                </h1>
-                
-                <p class="text-gray-300 max-w-3xl text-base sm:text-lg md:text-xl font-medium leading-relaxed mt-4 drop-shadow">
-                    LIVE RP — уникальный ролевой мир со стабильным лаунчером, продвинутыми структурами и отзывчивой администрацией.
-                </p>
-                
-                <div class="inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-4 bg-black/50 backdrop-blur-md px-5 py-3 rounded-xl border border-white/5 shadow-xl mt-4">
-                    <div class="flex items-center gap-2 relative">
-                        <span class="w-2 h-2 bg-red-500 rounded-full shadow-[0_0_8px_#ef4444] animate-ping absolute"></span>
-                        <span class="w-2 h-2 bg-red-500 rounded-full shadow-[0_0_8px_#ef4444] relative inline-block"></span>
-                        <span class="text-[10px] sm:text-xs uppercase font-black tracking-widest text-gray-300 ml-1.5">Сервер LIVE #1</span>
-                    </div>
-                    <div class="hidden sm:block w-[1px] h-3 bg-white/10"></div>
-                    <div class="text-xs sm:text-sm font-bold tracking-wide">
-                        <span class="text-red-500 text-base sm:text-xl font-black tabular-nums" id="online-count">748</span>
-                        <span class="text-gray-400 font-medium">/ 1000 игроков</span>
-                    </div>
-                </div>
-
-                <div class="pt-6 w-full sm:w-auto">
-                    <a href="#start" class="inline-block text-center w-full sm:w-auto bg-red-500 active:bg-red-600 hover:bg-red-600 px-12 py-4 rounded-xl font-black uppercase glow-red text-sm tracking-widest active:scale-95 transition-all shadow-lg shadow-red-500/20">
-                        Скачать лаунчер
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="hidden md:flex absolute bottom-10 left-1/2 transform -translate-x-1/2 flex-col items-center opacity-60 hover:opacity-100 transition-opacity cursor-pointer z-20 group" onclick="document.getElementById('factions').scrollIntoView({behavior: 'smooth'})">
-            <i class="fa-solid fa-chevron-down text-3xl sm:text-4xl text-gray-400 group-hover:text-red-500 transition-colors animate-bounce drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_15px_rgba(239,68,68,0.5)]"></i>
-        </div>
-    </header>
-
-    <section class="border-y border-white/[0.02] bg-[#08080a]/50 backdrop-blur-md py-8 sm:py-12 scroll-reveal relative z-20">
-        <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-0 text-center divide-y sm:divide-y-0 sm:divide-x divide-white/5">
-                <div class="space-y-1 py-2 sm:py-0">
-                    <div class="text-3xl sm:text-4xl font-black text-white italic uppercase tracking-tight"><span class="text-red-500">15+</span> фракций</div>
-                    <div class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">Огромный выбор ролей</div>
-                </div>
-                <div class="space-y-1 py-4 sm:py-0">
-                    <div class="text-3xl sm:text-4xl font-black text-white italic uppercase tracking-tight"><span class="text-red-500">500+</span> авто</div>
-                    <div class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">Собственный автопарк</div>
-                </div>
-                <div class="space-y-1 py-4 sm:py-0">
-                    <div class="text-3xl sm:text-4xl font-black text-white italic uppercase tracking-tight"><span class="text-red-500">24/7</span> помощь</div>
-                    <div class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">Поддержка администрации</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="factions" class="max-w-[1400px] mx-auto px-4 sm:px-6 py-16 sm:py-24 scroll-reveal">
-        <div class="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch lg:h-[500px] xl:h-[550px]">
-            
-            <div class="w-full lg:w-1/4 flex flex-col pt-2">
-                <div class="mb-6 lg:mb-8 text-center lg:text-left">
-                    <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-wide text-white mb-1">Профессии</h2>
-                    <span class="text-red-500 font-bold uppercase tracking-[0.2em] text-[10px] sm:text-xs block">Выбери свой путь</span>
-                </div>
-                
-                <div id="faction-icons-container" class="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-visible hide-scrollbar pb-4 lg:pb-0">
-                </div>
-            </div>
-
-            <div class="w-full lg:w-3/4 rounded-3xl overflow-hidden relative shadow-2xl group/faction border border-white/5 min-h-[400px] sm:min-h-[500px]">
-                
-                <img id="faction-image" src="" alt="Live RP" class="absolute inset-0 w-full h-full object-cover opacity-50 transition-all duration-1000 transform group-hover/faction:scale-105 filter saturate-[0.8]">
-                
-                <div class="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/80 to-transparent lg:bg-gradient-to-r lg:from-[#050507]/95 lg:via-[#050507]/60 lg:to-transparent z-0"></div>
-
-                <div class="relative z-10 w-full h-full flex flex-col justify-end p-6 sm:p-10 lg:p-12 text-left">
                     
-                    <div class="w-full lg:max-w-2xl" id="content-wrapper">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="h-1 w-8 sm:w-12 rounded-full transition-all duration-500 shadow-md" id="faction-line"></span>
-                            <span id="faction-subtitle" class="font-black uppercase tracking-[0.15em] text-[10px] sm:text-xs transition-colors duration-500"></span>
+                    <h2 class="text-xl font-black uppercase italic tracking-tight text-white leading-tight mb-2">
+                        ПО <span class="text-red-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.4)]">ПРОМОКОДУ</span>
+                    </h2>
+                    
+                    <p class="text-gray-400 text-[10px] sm:text-xs font-medium leading-relaxed mb-4">
+                        Введи код при регистрации, чтобы получить валюту и премиум-статус.
+                    </p>
+                    
+                    <div class="space-y-2">
+                        <div onclick="copyPromo()" class="bg-[#121216] border border-white/5 hover:border-red-500/30 transition-all px-4 py-2.5 rounded-xl flex items-center gap-2 cursor-pointer group/promo justify-between w-full">
+                            <span id="promo-text" class="font-black text-xs tracking-widest text-white uppercase select-all">LOVELVRP</span>
+                            <i id="promo-icon" class="fa-regular fa-copy text-gray-500 group-hover/promo:text-red-500 transition-colors text-xs"></i>
                         </div>
+                    </div>
+                </div>
+            </div>
 
-                        <h3 id="faction-title" class="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-wide uppercase mb-4 drop-shadow-md"></h3>
+            <div class="max-w-[1400px] mx-auto w-full relative z-10 flex flex-col items-center px-4 sm:px-6">
+                <div class="w-full text-center space-y-6 flex flex-col items-center max-w-4xl xl:pt-12 relative z-10">
+                    
+                    <h1 class="text-5xl sm:text-6xl md:text-7xl xl:text-[80px] font-black uppercase italic tracking-tight leading-[1.05] drop-shadow-xl">
+                        Твоя новая жизнь&nbsp;В <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-red-600 drop-shadow-[0_4px_10px_rgba(239,68,68,0.25)]">GTA 5 RolePlay</span>
+                    </h1>
+                    
+                    <p class="text-gray-300 max-w-3xl text-base sm:text-lg md:text-xl font-medium leading-relaxed mt-4 drop-shadow">
+                        LIVE RP — уникальный ролевой мир со стабильным лаунчером, продвинутыми структурами и отзывчивой администрацией.
+                    </p>
+                    
+                    <div class="inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-4 bg-black/50 backdrop-blur-md px-5 py-3 rounded-xl border border-white/5 shadow-xl mt-4">
+                        <div class="flex items-center gap-2 relative">
+                            <span class="w-2 h-2 bg-red-500 rounded-full shadow-[0_0_8px_#ef4444] animate-ping absolute"></span>
+                            <span class="w-2 h-2 bg-red-500 rounded-full shadow-[0_0_8px_#ef4444] relative inline-block"></span>
+                            <span class="text-[10px] sm:text-xs uppercase font-black tracking-widest text-gray-300 ml-1.5">Сервер LIVE #1</span>
+                        </div>
+                        <div class="hidden sm:block w-[1px] h-3 bg-white/10"></div>
+                        <div class="text-xs sm:text-sm font-bold tracking-wide">
+                            <span class="text-red-500 text-base sm:text-xl font-black tabular-nums" id="online-count">748</span>
+                            <span class="text-gray-400 font-medium">/ 1000 игроков</span>
+                        </div>
+                    </div>
 
-                        <p id="faction-desc" class="text-gray-300 text-sm sm:text-base leading-relaxed font-medium mb-8 max-w-2xl drop-shadow">
-                        </p>
+                    <div class="pt-6 w-full sm:w-auto">
+                        <a href="#start" class="inline-block text-center w-full sm:w-auto bg-red-500 active:bg-red-600 hover:bg-red-600 px-12 py-4 rounded-xl font-black uppercase glow-red text-sm tracking-widest active:scale-95 transition-all shadow-lg shadow-red-500/20">
+                            Скачать лаунчер
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-                        <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-                            <a href="#start" id="faction-btn" class="w-full sm:w-auto text-white font-black px-8 sm:px-12 py-4 rounded-xl text-xs uppercase tracking-widest text-center transition-all shadow-md active:scale-95">
-                                Начать играть
-                            </a>
-                            
-                            <div class="hidden sm:flex items-center gap-2">
-                                <button onclick="prevFaction()" class="w-12 h-12 rounded-xl border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/10 active:scale-90 transition-all">
-                                    <i class="fa-solid fa-chevron-left text-sm"></i>
-                                </button>
-                                <button onclick="nextFaction()" class="w-12 h-12 rounded-xl border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/10 active:scale-90 transition-all">
-                                    <i class="fa-solid fa-chevron-right text-sm"></i>
-                                </button>
+            <div class="hidden md:flex absolute bottom-10 left-1/2 transform -translate-x-1/2 flex-col items-center opacity-60 hover:opacity-100 transition-opacity cursor-pointer z-20 group" onclick="document.getElementById('factions').scrollIntoView({behavior: 'smooth'})">
+                <i class="fa-solid fa-chevron-down text-3xl sm:text-4xl text-gray-400 group-hover:text-red-500 transition-colors animate-bounce drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_15px_rgba(239,68,68,0.5)]"></i>
+            </div>
+        </header>
+
+        <section class="border-y border-white/[0.02] bg-[#08080a]/50 backdrop-blur-md py-8 sm:py-12 scroll-reveal relative z-20">
+            <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-0 text-center divide-y sm:divide-y-0 sm:divide-x divide-white/5">
+                    <div class="space-y-1 py-2 sm:py-0">
+                        <div class="text-3xl sm:text-4xl font-black text-white italic uppercase tracking-tight"><span class="text-red-500">15+</span> фракций</div>
+                        <div class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">Огромный выбор ролей</div>
+                    </div>
+                    <div class="space-y-1 py-4 sm:py-0">
+                        <div class="text-3xl sm:text-4xl font-black text-white italic uppercase tracking-tight"><span class="text-red-500">500+</span> авто</div>
+                        <div class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">Собственный автопарк</div>
+                    </div>
+                    <div class="space-y-1 py-4 sm:py-0">
+                        <div class="text-3xl sm:text-4xl font-black text-white italic uppercase tracking-tight"><span class="text-red-500">24/7</span> помощь</div>
+                        <div class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">Поддержка администрации</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="factions" class="max-w-[1400px] mx-auto px-4 sm:px-6 py-16 sm:py-24 scroll-reveal">
+            <div class="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch lg:h-[500px] xl:h-[550px]">
+                
+                <div class="w-full lg:w-1/4 flex flex-col pt-2">
+                    <div class="mb-6 lg:mb-8 text-center lg:text-left">
+                        <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-wide text-white mb-1">Профессии</h2>
+                        <span class="text-red-500 font-bold uppercase tracking-[0.2em] text-[10px] sm:text-xs block">Выбери свой путь</span>
+                    </div>
+                    
+                    <div id="faction-icons-container" class="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-visible hide-scrollbar pb-4 lg:pb-0">
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-3/4 rounded-3xl overflow-hidden relative shadow-2xl group/faction border border-white/5 min-h-[400px] sm:min-h-[500px]">
+                    
+                    <img id="faction-image" src="" alt="Live RP" class="absolute inset-0 w-full h-full object-cover opacity-50 transition-all duration-1000 transform group-hover/faction:scale-105 filter saturate-[0.8]">
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/80 to-transparent lg:bg-gradient-to-r lg:from-[#050507]/95 lg:via-[#050507]/60 lg:to-transparent z-0"></div>
+
+                    <div class="relative z-10 w-full h-full flex flex-col justify-end p-6 sm:p-10 lg:p-12 text-left">
+                        
+                        <div class="w-full lg:max-w-2xl" id="content-wrapper">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="h-1 w-8 sm:w-12 rounded-full transition-all duration-500 shadow-md" id="faction-line"></span>
+                                <span id="faction-subtitle" class="font-black uppercase tracking-[0.15em] text-[10px] sm:text-xs transition-colors duration-500"></span>
+                            </div>
+
+                            <h3 id="faction-title" class="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-wide uppercase mb-4 drop-shadow-md"></h3>
+
+                            <p id="faction-desc" class="text-gray-300 text-sm sm:text-base leading-relaxed font-medium mb-8 max-w-2xl drop-shadow">
+                            </p>
+
+                            <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                                <a href="#start" id="faction-btn" class="w-full sm:w-auto text-white font-black px-8 sm:px-12 py-4 rounded-xl text-xs uppercase tracking-widest text-center transition-all shadow-md active:scale-95">
+                                    Начать играть
+                                </a>
+                                
+                                <div class="hidden sm:flex items-center gap-2">
+                                    <button onclick="prevFaction()" class="w-12 h-12 rounded-xl border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/10 active:scale-90 transition-all">
+                                        <i class="fa-solid fa-chevron-left text-sm"></i>
+                                    </button>
+                                    <button onclick="nextFaction()" class="w-12 h-12 rounded-xl border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/10 active:scale-90 transition-all">
+                                        <i class="fa-solid fa-chevron-right text-sm"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="relative max-w-[1400px] mx-auto px-4 sm:px-6 py-16 sm:py-28 border-t border-white/[0.02] scroll-reveal">
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-3/4 bg-red-600/5 blur-[120px] rounded-full pointer-events-none z-0"></div>
+            
+            <div class="text-center mb-10 sm:mb-16 relative z-10">
+                <h2 class="text-2xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight">Почему выбирают <span class="text-red-500 italic">LIVE RP</span>?</h2>
+                <p class="text-gray-400 mt-3 max-w-xl mx-auto text-xs sm:text-sm font-medium leading-relaxed px-2">Технологический стек платформы оптимизирован для обеспечения стабильного FPS и максимального погружения.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8 items-stretch relative z-10">
+                
+                <div class="bg-gradient-to-br from-[#121217]/90 to-[#0a0a0d]/90 border border-white/[0.05] hover:border-red-500/30 p-6 sm:p-10 rounded-[20px] sm:rounded-[32px] transition-all duration-500 group text-left flex flex-col justify-between relative overflow-hidden shadow-lg hover:shadow-[0_15px_40px_rgba(239,68,68,0.15)] hover:-translate-y-2">
+                    <div>
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center mb-6 group-hover:border-red-500/30 group-hover:bg-red-500/5 transition-all">
+                            <i class="fa-solid fa-code text-xl text-gray-400 group-hover:text-red-500 transition-colors"></i>
+                        </div>
+                        <h3 class="text-lg sm:text-2xl font-black uppercase tracking-wide text-white mb-3 group-hover:text-red-500 transition-colors">Экосистема</h3>
+                        <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-medium">Уникальное серверное ядро на базе FiveM. Полное отсутствие микрофризов, моментальный отклик интерфейсов и плавная синхронизация транспорта.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-[#121217]/90 to-[#0a0a0d]/90 border border-white/[0.05] hover:border-red-500/30 p-6 sm:p-10 rounded-[20px] sm:rounded-[32px] transition-all duration-500 group text-left flex flex-col justify-between relative overflow-hidden shadow-lg hover:shadow-[0_15px_40px_rgba(239,68,68,0.15)] hover:-translate-y-2">
+                    <div>
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center mb-6 group-hover:border-red-500/30 group-hover:bg-red-500/5 transition-all">
+                            <i class="fa-solid fa-car text-xl text-gray-400 group-hover:text-red-500 transition-colors"></i>
+                        </div>
+                        <h3 class="text-lg sm:text-2xl font-black uppercase tracking-wide text-white mb-3 group-hover:text-red-500 transition-colors">Автопарк</h3>
+                        <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-medium">Более 500 детализированных моделей реальных марок. Кастомный визуальный тюнинг, детальная настройка физики подвески и эксклюзивные винилы.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-[#121217]/90 to-[#0a0a0d]/90 border border-white/[0.05] hover:border-red-500/30 p-6 sm:p-10 rounded-[20px] sm:rounded-[32px] transition-all duration-500 group text-left flex flex-col justify-between relative overflow-hidden shadow-lg hover:shadow-[0_15px_40px_rgba(239,68,68,0.15)] hover:-translate-y-2 md:col-span-2 lg:col-span-1">
+                    <div>
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center mb-6 group-hover:border-red-500/30 group-hover:bg-red-500/5 transition-all">
+                            <i class="fa-solid fa-users text-xl text-gray-400 group-hover:text-red-500 transition-colors"></i>
+                        </div>
+                        <h3 class="text-lg sm:text-2xl font-black uppercase tracking-wide text-white mb-3 group-hover:text-red-500 transition-colors">Свобода</h3>
+                        <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-medium">Финансовая модель, полностью регулируемая действиями игроков. Создавайте корпорации, монополизируйте торговые рынки или ведите теневой бизнес.</p>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <section id="start" class="relative border-y border-white/[0.05] py-16 sm:py-28 scroll-reveal overflow-hidden bg-gradient-to-b from-[#060608] via-[#1a0808] to-[#060608]">
+            <div class="absolute inset-0 dots-pattern pointer-events-none z-0 opacity-50"></div>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center relative z-10">
+                
+                <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-wide mb-2 drop-shadow-lg">Как <span class="text-red-500">начать играть?</span></h2>
+                
+                <div class="text-gray-400 text-sm sm:text-base font-bold uppercase tracking-widest flex flex-col items-center gap-3 mb-12 sm:mb-20">
+                    <span>Смотри ниже</span>
+                    <i class="fa-solid fa-arrow-down text-red-500 animate-bounce text-xl"></i>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6 sm:gap-8 relative z-10">
+                    
+                    <div class="relative p-6 sm:p-10 bg-[#0d0d12]/90 backdrop-blur-md border border-white/10 hover:border-red-500/50 rounded-[20px] sm:rounded-[32px] group pt-8 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(239,68,68,0.15)] hover:-translate-y-2 text-left sm:text-center">
+                        <div class="step-number sm:mx-auto mb-2 text-4xl sm:text-5xl">01</div>
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-center sm:mx-auto text-xl text-red-500 mb-5 group-hover:scale-110 transition-transform duration-500"><i class="fa-brands fa-steam"></i></div>
+                        <h4 class="text-base sm:text-lg font-black uppercase tracking-widest text-white mb-3">Лицензия GTA 5</h4>
+                        <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-medium">Подойдет абсолютно любая официальная версия игры (Steam, Epic Games, Rockstar Launcher).</p>
+                    </div>
+                    
+                    <div class="relative p-6 sm:p-10 bg-[#0d0d12]/90 backdrop-blur-md border border-white/10 hover:border-red-500/50 rounded-[20px] sm:rounded-[32px] group pt-8 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(239,68,68,0.15)] hover:-translate-y-2 text-left sm:text-center">
+                        <div class="step-number sm:mx-auto mb-2 text-4xl sm:text-5xl">02</div>
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-center sm:mx-auto text-xl text-red-500 mb-5 group-hover:scale-110 transition-transform duration-500"><i class="fa-solid fa-download"></i></div>
+                        <h4 class="text-base sm:text-lg font-black uppercase tracking-widest text-white mb-3">Наш лаунчер</h4>
+                        <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-medium mb-5">Загрузите умный загрузчик. Он в автоматическом режиме распакует и установит нужные файлы.</p>
+                        <a href="launcher.exe" download class="inline-block bg-red-500 hover:bg-red-400 text-white px-8 py-3 rounded-xl text-xs font-black transition-all shadow-[0_0_15px_rgba(239,68,68,0.3)] hover:shadow-[0_0_25px_rgba(239,68,68,0.6)] uppercase tracking-widest">Скачать</a>
+                    </div>
+                    
+                    <div class="relative p-6 sm:p-10 bg-[#0d0d12]/90 backdrop-blur-md border border-white/10 hover:border-red-500/50 rounded-[20px] sm:rounded-[32px] group pt-8 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(239,68,68,0.15)] hover:-translate-y-2 text-left sm:text-center">
+                        <div class="step-number sm:mx-auto mb-2 text-4xl sm:text-5xl">03</div>
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-center sm:mx-auto text-xl text-red-500 mb-5 group-hover:scale-110 transition-transform duration-500"><i class="fa-solid fa-plug"></i></div>
+                        <h4 class="text-base sm:text-lg font-black uppercase tracking-widest text-white mb-3">Подключение</h4>
+                        <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-medium">Запускайте клиент, регистрируйте игровой аккаунт и сгенерируйте внешность вашего будущего персонажа.</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-[#040405] border-t border-white/[0.02] pt-12 sm:pt-16 pb-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10 text-left">
+                    
+                    <div class="space-y-3 col-span-1 sm:col-span-2 md:col-span-1">
+                        <span class="text-xl font-black tracking-widest uppercase italic text-white">
+                            <span class="text-red-500">LIVE <i class="fa-solid fa-heartbeat animate-pulse ml-0.5 text-lg"></i></span>RP
+                        </span>
+                        <p class="text-gray-500 text-[11px] leading-relaxed font-medium">Игровой server мультиплеера RAGE MP. Take-Two Interactive, Rockstar Games не имеют отношения к проекту.</p>
+                    </div>
+                    
+                    <div>
+                        <h5 class="text-[11px] font-black uppercase tracking-[0.15em] text-white mb-3">Навигация</h5>
+                        <ul class="space-y-2 text-xs text-gray-400 font-medium">
+                            <li><a href="https://forum.liverp.ru/" target="_blank" class="hover:text-red-500 transition-colors">Официальный Форум</a></li>
+                            <li><a href="donate.html" class="hover:text-red-500 transition-colors">Пополнение счета (Донат)</a></li>
+                            <li><a href="https://forum.liverp.ru/forums/obshchiye-pravila-proyekta.2/" target="_blank" class="hover:text-red-500 transition-colors">Общие правила</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h5 class="text-[11px] font-black uppercase tracking-[0.15em] text-white mb-3">Документы</h5>
+                        <ul class="space-y-2 text-xs text-gray-400 font-medium">
+                            <li><a href="#" class="hover:text-red-500 transition-colors">Соглашение оферты</a></li>
+                            <li><a href="#" class="hover:text-red-500 transition-colors">Конфиденциальность</a></li>
+                            <li><a href="#" class="hover:text-red-500 transition-colors">Правила возврата</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h5 class="text-[11px] font-black uppercase tracking-[0.15em] text-white mb-3">Контакты</h5>
+                        <p class="text-gray-500 text-xs mb-2 font-medium">Технические вопросы по лаунчеру:</p>
+                        <p class="text-xs text-gray-300 font-bold hover:text-white transition-colors cursor-pointer">Email: <span class="text-gray-400 font-medium hover:text-red-400 transition-colors">support@live-rp.ru</span></p>
                     </div>
 
                 </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="relative max-w-[1400px] mx-auto px-4 sm:px-6 py-16 sm:py-28 border-t border-white/[0.02] scroll-reveal">
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-3/4 bg-red-600/5 blur-[120px] rounded-full pointer-events-none z-0"></div>
-        
-        <div class="text-center mb-10 sm:mb-16 relative z-10">
-            <h2 class="text-2xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight">Почему выбирают <span class="text-red-500 italic">LIVE RP</span>?</h2>
-            <p class="text-gray-400 mt-3 max-w-xl mx-auto text-xs sm:text-sm font-medium leading-relaxed px-2">Технологический стек платформы оптимизирован для обеспечения стабильного FPS и максимального погружения.</p>
-        </div>
-        
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8 items-stretch relative z-10">
-            
-            <div class="bg-gradient-to-br from-[#121217]/90 to-[#0a0a0d]/90 border border-white/[0.05] hover:border-red-500/30 p-6 sm:p-10 rounded-[20px] sm:rounded-[32px] transition-all duration-500 group text-left flex flex-col justify-between relative overflow-hidden shadow-lg hover:shadow-[0_15px_40px_rgba(239,68,68,0.15)] hover:-translate-y-2">
-                <div>
-                    <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center mb-6 group-hover:border-red-500/30 group-hover:bg-red-500/5 transition-all">
-                        <i class="fa-solid fa-code text-xl text-gray-400 group-hover:text-red-500 transition-colors"></i>
-                    </div>
-                    <h3 class="text-lg sm:text-2xl font-black uppercase tracking-wide text-white mb-3 group-hover:text-red-500 transition-colors">Экосистема</h3>
-                    <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-medium">Уникальное серверное ядро на базе FiveM. Полное отсутствие микрофризов, моментальный отклик интерфейсов и плавная синхронизация транспорта.</p>
-                </div>
-            </div>
-            
-            <div class="bg-gradient-to-br from-[#121217]/90 to-[#0a0a0d]/90 border border-white/[0.05] hover:border-red-500/30 p-6 sm:p-10 rounded-[20px] sm:rounded-[32px] transition-all duration-500 group text-left flex flex-col justify-between relative overflow-hidden shadow-lg hover:shadow-[0_15px_40px_rgba(239,68,68,0.15)] hover:-translate-y-2">
-                <div>
-                    <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center mb-6 group-hover:border-red-500/30 group-hover:bg-red-500/5 transition-all">
-                        <i class="fa-solid fa-car text-xl text-gray-400 group-hover:text-red-500 transition-colors"></i>
-                    </div>
-                    <h3 class="text-lg sm:text-2xl font-black uppercase tracking-wide text-white mb-3 group-hover:text-red-500 transition-colors">Автопарк</h3>
-                    <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-medium">Более 500 детализированных моделей реальных марок. Кастомный визуальный тюнинг, детальная настройка физики подвески и эксклюзивные винилы.</p>
-                </div>
-            </div>
-            
-            <div class="bg-gradient-to-br from-[#121217]/90 to-[#0a0a0d]/90 border border-white/[0.05] hover:border-red-500/30 p-6 sm:p-10 rounded-[20px] sm:rounded-[32px] transition-all duration-500 group text-left flex flex-col justify-between relative overflow-hidden shadow-lg hover:shadow-[0_15px_40px_rgba(239,68,68,0.15)] hover:-translate-y-2 md:col-span-2 lg:col-span-1">
-                <div>
-                    <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center mb-6 group-hover:border-red-500/30 group-hover:bg-red-500/5 transition-all">
-                        <i class="fa-solid fa-users text-xl text-gray-400 group-hover:text-red-500 transition-colors"></i>
-                    </div>
-                    <h3 class="text-lg sm:text-2xl font-black uppercase tracking-wide text-white mb-3 group-hover:text-red-500 transition-colors">Свобода</h3>
-                    <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-medium">Финансовая модель, полностью регулируемая действиями игроков. Создавайте корпорации, монополизируйте торговые рынки или ведите теневой бизнес.</p>
-                </div>
-            </div>
-            
-        </div>
-    </section>
-
-    <section id="start" class="relative border-y border-white/[0.05] py-16 sm:py-28 scroll-reveal overflow-hidden bg-gradient-to-b from-[#060608] via-[#1a0808] to-[#060608]">
-        <div class="absolute inset-0 dots-pattern pointer-events-none z-0 opacity-50"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center relative z-10">
-            
-            <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-wide mb-2 drop-shadow-lg">Как <span class="text-red-500">начать играть?</span></h2>
-            
-            <div class="text-gray-400 text-sm sm:text-base font-bold uppercase tracking-widest flex flex-col items-center gap-3 mb-12 sm:mb-20">
-                <span>Смотри ниже</span>
-                <i class="fa-solid fa-arrow-down text-red-500 animate-bounce text-xl"></i>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-6 sm:gap-8 relative z-10">
                 
-                <div class="relative p-6 sm:p-10 bg-[#0d0d12]/90 backdrop-blur-md border border-white/10 hover:border-red-500/50 rounded-[20px] sm:rounded-[32px] group pt-8 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(239,68,68,0.15)] hover:-translate-y-2 text-left sm:text-center">
-                    <div class="step-number sm:mx-auto mb-2 text-4xl sm:text-5xl">01</div>
-                    <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-center sm:mx-auto text-xl text-red-500 mb-5 group-hover:scale-110 transition-transform duration-500"><i class="fa-brands fa-steam"></i></div>
-                    <h4 class="text-base sm:text-lg font-black uppercase tracking-widest text-white mb-3">Лицензия GTA 5</h4>
-                    <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-medium">Подойдет абсолютно любая официальная версия игры (Steam, Epic Games, Rockstar Launcher).</p>
+                <div class="border-t border-white/[0.02] pt-6 text-center text-[11px] text-gray-600 space-y-1.5 font-medium">
+                    <p>© 2026 LIVE RP. Все права сохранены за правообладателями.</p>
                 </div>
-                
-                <div class="relative p-6 sm:p-10 bg-[#0d0d12]/90 backdrop-blur-md border border-white/10 hover:border-red-500/50 rounded-[20px] sm:rounded-[32px] group pt-8 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(239,68,68,0.15)] hover:-translate-y-2 text-left sm:text-center">
-                    <div class="step-number sm:mx-auto mb-2 text-4xl sm:text-5xl">02</div>
-                    <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-center sm:mx-auto text-xl text-red-500 mb-5 group-hover:scale-110 transition-transform duration-500"><i class="fa-solid fa-download"></i></div>
-                    <h4 class="text-base sm:text-lg font-black uppercase tracking-widest text-white mb-3">Наш лаунчер</h4>
-                    <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-medium mb-5">Загрузите умный загрузчик. Он в автоматическом режиме распакует и установит нужные файлы.</p>
-                    <a href="launcher.exe" download class="inline-block bg-red-500 hover:bg-red-400 text-white px-8 py-3 rounded-xl text-xs font-black transition-all shadow-[0_0_15px_rgba(239,68,68,0.3)] hover:shadow-[0_0_25px_rgba(239,68,68,0.6)] uppercase tracking-widest">Скачать</a>
-                </div>
-                
-                <div class="relative p-6 sm:p-10 bg-[#0d0d12]/90 backdrop-blur-md border border-white/10 hover:border-red-500/50 rounded-[20px] sm:rounded-[32px] group pt-8 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(239,68,68,0.15)] hover:-translate-y-2 text-left sm:text-center">
-                    <div class="step-number sm:mx-auto mb-2 text-4xl sm:text-5xl">03</div>
-                    <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-center sm:mx-auto text-xl text-red-500 mb-5 group-hover:scale-110 transition-transform duration-500"><i class="fa-solid fa-plug"></i></div>
-                    <h4 class="text-base sm:text-lg font-black uppercase tracking-widest text-white mb-3">Подключение</h4>
-                    <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-medium">Запускайте клиент, регистрируйте игровой аккаунт и сгенерируйте внешность вашего будущего персонажа.</p>
-                </div>
-                
             </div>
-        </div>
-    </section>
-
-    <footer class="bg-[#040405] border-t border-white/[0.02] pt-12 sm:pt-16 pb-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10 text-left">
-                
-                <div class="space-y-3 col-span-1 sm:col-span-2 md:col-span-1">
-                    <span class="text-xl font-black tracking-widest uppercase italic text-white">
-                        <span class="text-red-500">LIVE <i class="fa-solid fa-heartbeat animate-pulse ml-0.5 text-lg"></i></span>RP
-                    </span>
-                    <p class="text-gray-500 text-[11px] leading-relaxed font-medium">Игровой server мультиплеера RAGE MP. Take-Two Interactive, Rockstar Games не имеют отношения к проекту.</p>
-                </div>
-                
-                <div>
-                    <h5 class="text-[11px] font-black uppercase tracking-[0.15em] text-white mb-3">Навигация</h5>
-                    <ul class="space-y-2 text-xs text-gray-400 font-medium">
-                        <li><a href="https://forum.liverp.ru/" target="_blank" class="hover:text-red-500 transition-colors">Официальный Форум</a></li>
-                        <li><a href="donate.html" class="hover:text-red-500 transition-colors">Пополнение счета (Донат)</a></li>
-                        <li><a href="https://forum.liverp.ru/forums/obshchiye-pravila-proyekta.2/" target="_blank" class="hover:text-red-500 transition-colors">Общие правила</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h5 class="text-[11px] font-black uppercase tracking-[0.15em] text-white mb-3">Документы</h5>
-                    <ul class="space-y-2 text-xs text-gray-400 font-medium">
-                        <li><a href="#" class="hover:text-red-500 transition-colors">Соглашение оферты</a></li>
-                        <li><a href="#" class="hover:text-red-500 transition-colors">Конфиденциальность</a></li>
-                        <li><a href="#" class="hover:text-red-500 transition-colors">Правила возврата</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h5 class="text-[11px] font-black uppercase tracking-[0.15em] text-white mb-3">Контакты</h5>
-                    <p class="text-gray-500 text-xs mb-2 font-medium">Технические вопросы по лаунчеру:</p>
-                    <p class="text-xs text-gray-300 font-bold hover:text-white transition-colors cursor-pointer">Email: <span class="text-gray-400 font-medium hover:text-red-400 transition-colors">support@live-rp.ru</span></p>
-                </div>
-
-            </div>
-            
-            <div class="border-t border-white/[0.02] pt-6 text-center text-[11px] text-gray-600 space-y-1.5 font-medium">
-                <p>© 2026 LIVE RP. Все права сохранены за правообладателями.</p>
-            </div>
-        </div>
-    </footer>
+        </footer>
+    </main>
 
     <script>
+    // === ЛОГИКА ПЛАВНОГО ПЕРЕХОДА КОНТЕНТА ===
+    document.addEventListener("DOMContentLoaded", () => {
+        const pageContent = document.getElementById('page-content');
+
+        const links = document.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const target = link.getAttribute('href');
+                const isBlank = link.getAttribute('target') === '_blank';
+
+                // Игнорируем пустые ссылки, внешние вкладки, скрипты и якори
+                if (!target || target.startsWith('#') || target.startsWith('javascript:') || isBlank) return;
+
+                // Если ссылка ведет на текущую страницу — ничего не делаем
+                if (target === window.location.pathname.split('/').pop()) return;
+
+                e.preventDefault();
+                
+                // Запускаем анимацию исчезновения контента
+                pageContent.classList.add('page-exit');
+
+                // Ждем 250мс (пока идет анимация fadeOut) и перенаправляем
+                setTimeout(() => {
+                    window.location.href = target;
+                }, 250);
+            });
+        });
+    });
+
+    // ОРИГИНАЛЬНЫЕ СКРИПТЫ
     function copyPromo() {
         const promoText = document.getElementById('promo-text').innerText;
         const icon = document.getElementById('promo-icon');
